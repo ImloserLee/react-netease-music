@@ -1,0 +1,71 @@
+.header {
+    padding: 0 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: $header-height;
+    background-color: var(--header-bgcolor);
+
+    /deep/.iconfont {
+        color: var(--header-font-color);
+    }
+
+    .header-left {
+        @include flex-center;
+
+        &__buttons {
+            @include flex-center;
+
+            &:hover {
+                .mac-button>i {
+                    opacity: 1;
+                }
+            }
+
+            .mac-button {
+                @include flex-center;
+                margin-right: 5px;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+
+
+                &.red {
+                    background-color: #ed655a;
+                }
+
+                &.green {
+                    background: #72be47;
+                }
+
+                &.yellow {
+                    background: #e0c04c;
+                }
+
+                i {
+                    opacity: 0;
+                    transition: opacity 0.3s;
+                    color: $black;
+                    font-weight: $font-weight-bold;
+                    transform-origin: center center;
+                }
+            }
+        }
+
+        &__history {
+            margin-left: 20px;
+        }
+    }
+
+    .header-right {
+        @include flex-center;
+
+        .header-right__theme {
+            margin-left: 10px
+        }
+    }
+
+    @include ant-input-theme(var(--header-input-color),
+        var(--header-input-bgcolor),
+        var(--header-input-placeholder-color))
+}

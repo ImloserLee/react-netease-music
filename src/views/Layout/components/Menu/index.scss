@@ -1,0 +1,18 @@
+.menu-wrapper {
+    width: 250px;
+    height: 100%;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--menu-bgcolor);
+
+    .menu-user {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+
+        p {
+            margin-bottom: 0;
+        }
+    }
+}

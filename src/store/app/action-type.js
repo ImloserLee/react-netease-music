@@ -1,0 +1,3 @@
+export const TOGGLE_TRIGGER = 'TOGGLE_TRIGGER';
+export const SET_BREADCRUMB = 'SET_BREADCRUMB';
+export const SET_OPENKEYS = 'SET_OPENKEYS';

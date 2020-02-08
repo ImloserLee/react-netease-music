@@ -1,0 +1,57 @@
+//input
+$input-height: 24px;
+
+@mixin ant-input-style($color, $bg-color, $placeholder-color) {
+    .ant-input {
+        height: $input-height !important;
+        line-height: $input-height !important;
+        background: #{$bg-color} !important;
+        border: none !important;
+        color: #{$color} !important;
+
+        &:hover {
+            border: none !important;
+        }
+
+        &:focus {
+            border: none !important;
+            box-shadow: none;
+        }
+    }
+
+    .ant-input-prefix {
+        line-height: $input-height + 3px !important;
+
+        i {
+            color: #{$color} !important;
+            transition: none !important;
+        }
+    }
+
+    input::-webkit-input-placeholder {
+        color: #{$placeholder-color} !important;
+    }
+}
+
+// 外部覆写input-theme样式
+@mixin ant-input-theme($color, $bg-color, $placeholder-color: $color) {
+    /deep/.ant-input-affix-wrapper {
+        @include ant-input-style($color, $bg-color, $placeholder-color);
+    }
+
+    /deep/.ant-input-search {
+        @include ant-input-style($color, $bg-color, $placeholder-color);
+    }
+}
+
+.ant-input-affix-wrapper {
+    @include ant-input-style(var(--input-color),
+        var(--input-bgcolor),
+        var(--font-color-grey-shallow));
+}
+
+.ant-input-search {
+    @include ant-input-style(var(--input-color),
+        var(--input-bgcolor),
+        var(--font-color-grey-shallow));
+}

@@ -1,0 +1,9 @@
+.mini-player-wrapper {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: $mini-player-height;
+    background-color: var(--player-bgcolor);
+    z-index: $mini-player-z-index;
+}

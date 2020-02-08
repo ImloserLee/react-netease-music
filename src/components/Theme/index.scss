@@ -1,0 +1,23 @@
+.theme-content {
+
+    @include flex-center;
+
+    .theme-item {
+        width: 50px;
+        @include flex-center();
+        flex-direction: column;
+        margin: 0 8px;
+        cursor: pointer;
+
+        .theme-icon {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            margin-bottom: 4px;
+        }
+
+        .theme-title {
+            margin-bottom: 0;
+        }
+    }
+}
