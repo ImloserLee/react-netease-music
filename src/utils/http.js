@@ -56,9 +56,9 @@ _axios.interceptors.response.use(
     response => {
         const res = response.data;
 
-        /* if (res.code !== 0) {
+        if (res.code !== 200) {
             return Promise.reject(res.message || 'error');
-        } */
+        }
         return res;
     },
     error => {

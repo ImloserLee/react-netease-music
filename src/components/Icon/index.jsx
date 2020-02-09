@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { toRem } from 'utils/rem';
@@ -16,7 +16,7 @@ function Icon(props) {
         className
     );
 
-    const getIconStyle = () => {
+    const getIconStyle = useCallback(() => {
         const chromeMinSize = 12;
         const retStyle = { fontSize: toRem(size) };
         if (size < chromeMinSize) {
@@ -24,10 +24,12 @@ function Icon(props) {
             retStyle.transform = `scale(${ratio})`;
         }
         return retStyle;
-    };
+    }, [size]);
 
     const handleClick = e => {
-        click(e);
+        if (click) {
+            click(e);
+        }
     };
 
     const MyIcon = <i className={cls} style={getIconStyle()} onClick={handleClick}></i>;

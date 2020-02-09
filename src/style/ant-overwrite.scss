@@ -50,8 +50,32 @@ $input-height: 24px;
         var(--font-color-grey-shallow));
 }
 
-.ant-input-search {
+.login-body {
     @include ant-input-style(var(--input-color),
         var(--input-bgcolor),
         var(--font-color-grey-shallow));
+}
+
+// modal
+.ant-modal-header,
+.ant-modal-content {
+    background: var(--modal-bg-color) !important;
+    border-bottom: none;
+}
+
+.ant-modal-title,
+.ant-modal-close {
+    color: var(--font-color) !important;
+}
+
+.ant-modal-footer {
+    border-top: none;
+    padding: 18px;
+}
+
+
+// button
+.ant-btn-primary {
+    background: $theme-color !important;
+    border-color: $theme-color !important;
 }

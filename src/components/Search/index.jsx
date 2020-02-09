@@ -39,6 +39,7 @@ function SearchInput() {
     const goSearch = async value => {};
 
     const clickEvent = e => {
+        // 能获取到panel这个dom节点,同时鼠标点击的位置不包含在这个区域内，且鼠标不是在搜索栏的输入框内的时候，将panel的显示状态置为false
         if (
             panelEl.current &&
             !panelEl.current.contains(e.target) &&
@@ -47,8 +48,6 @@ function SearchInput() {
             setInPanel(false);
             return;
         }
-
-        setInPanel(true);
     };
 
     const getSearchHotList = async () => {

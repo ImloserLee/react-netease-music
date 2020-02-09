@@ -1,0 +1,29 @@
+.user-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 12px 18px 0 18px;
+    color: var(--font-color);
+    cursor: pointer;
+
+    p {
+        margin-bottom: 0;
+    }
+}
+
+.login-body {
+    color: var(--font-color);
+
+    .login-input {
+        margin-bottom: 16px;
+    }
+
+    .login-help {
+        .help {
+            margin-bottom: 4px;
+        }
+    }
+}
+
+.login-btn {
+    width: 100%;
+}
