@@ -1,18 +1,34 @@
 import React, { Fragment, useState } from 'react';
 import Icon from 'components/Icon';
-import { Modal, Button, Input } from 'antd';
+import { Modal, Button, Input, message } from 'antd';
+import { connect } from 'react-redux';
+import * as userActions from 'store/user/action';
+import { bindActionCreators } from 'redux';
 import './index.scss';
 
-const User = () => {
+const User = props => {
     const [visible, setVisible] = useState(false);
+    const [inputVal, setInputVal] = useState('');
     const handleOpenModal = () => {
         setVisible(true);
     };
     const handleLogin = () => {
-        setVisible(false);
+        if (!inputVal) {
+            message.warning('请先填写uid');
+            return;
+        }
+        props.userActions.login(inputVal).then(res => {
+            if (res) {
+                setVisible(false);
+            }
+        });
     };
     const handleCancel = () => {
         setVisible(false);
+    };
+
+    const handleInputChange = e => {
+        setInputVal(e.target.value);
     };
     return (
         <Fragment>
@@ -31,7 +47,12 @@ const User = () => {
                 ]}
             >
                 <div className='login-body'>
-                    <Input placeholder='请输入您的网易云uid' className='login-input' />
+                    <Input
+                        placeholder='请输入您的网易云uid'
+                        value={inputVal}
+                        onChange={handleInputChange}
+                        className='login-input'
+                    />
                     <div className='login-help'>
                         <p className='help'>
                             1、请
@@ -56,4 +77,13 @@ const User = () => {
     );
 };
 
-export default User;
+const mapDispatchToProps = dispatch => {
+    return {
+        userActions: bindActionCreators(userActions, dispatch)
+    };
+};
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(User);
