@@ -4,6 +4,7 @@ import { Popover } from 'antd';
 import variables from 'style/themes/variables';
 import variablesWhite from 'style/themes/variables-white';
 import variablesRed from 'style/themes/variables-red';
+import { setStorage, getStorage, THEME_KEY } from 'utils';
 import './index.scss';
 
 const themesObj = {
@@ -45,6 +46,7 @@ function Theme() {
     const [themes] = useState(themeMap);
     const [visible, setVisible] = useState(false);
     const changeTheme = themeKey => {
+        setStorage(THEME_KEY, themeKey);
         const theme = themes[themeKey].file;
         Object.keys(theme).forEach(key => {
             const value = theme[key];
@@ -86,7 +88,8 @@ function Theme() {
     };
 
     useEffect(() => {
-        changeTheme(themesObj.white);
+        const theme = getStorage(THEME_KEY) ? getStorage(THEME_KEY) : themesObj.white;
+        changeTheme(theme);
         // eslint-disable-next-line
     }, []);
 

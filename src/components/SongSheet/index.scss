@@ -1,0 +1,52 @@
+.song-sheet-wrapper {
+    .song-sheet-title {
+        font-size: $font-size-sm;
+        color: var(--font-color-grey2);
+        padding-left: 16px;
+        margin-bottom: 12px;
+    }
+
+    .sont-sheet-item {
+        cursor: pointer;
+
+        a {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 12px 18px;
+            color: var(--font-color);
+
+            &.active {
+                color: $theme-color;
+                background: var(--menu-item-active-bg);
+
+                .name,
+                .num {
+                    color: $theme-color;
+                }
+            }
+        }
+
+        .item-avatar {
+            margin-right: 12px;
+        }
+
+        .item-name {
+            @include text-ellipsis;
+
+            p {
+                font-size: $font-size-sm;
+                margin-bottom: 0;
+            }
+
+            .name {
+                @include text-ellipsis;
+                color: var(--font-color);
+            }
+
+            .num {
+                color: var(--font-color-grey2);
+            }
+        }
+    }
+}

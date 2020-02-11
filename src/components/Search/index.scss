@@ -2,7 +2,7 @@
     width: 150px;
     position: relative;
 
-    .search-panel {
+    .search-panel-wrapper {
         padding: 10px 20px;
         position: fixed;
         top: $header-height;
@@ -15,7 +15,7 @@
         overflow-y: auto;
         @include box-shadow;
 
-        &-hot {
+        /* &-hot {
             margin-bottom: 30px;
 
 
@@ -38,6 +38,6 @@
             &:hover {
                 background-color: var(--button-hover-bgcolor);
             }
-        }
+        } */
     }
 }

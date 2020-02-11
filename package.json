@@ -23,7 +23,8 @@
         "react-transition-group": "^4.3.0",
         "redux": "^4.0.4",
         "redux-thunk": "^2.3.0",
-        "sass-resources-loader": "^2.0.1"
+        "sass-resources-loader": "^2.0.1",
+        "good-storage": "^1.1.0"
     },
     "scripts": {
         "start": "concurrently \"react-app-rewired start\" \"cd node_modules/NeteaseCloudMusicApi && set PORT=4000 && node app.js\"",

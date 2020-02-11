@@ -5,7 +5,7 @@ import { renderRoutes } from 'react-router-config';
 import Route from './router';
 import { Provider } from 'react-redux';
 import store from 'store';
-import { calcFontSize } from 'utils/rem';
+import { calcFontSize } from 'utils';
 import './style/index.scss';
 
 calcFontSize();

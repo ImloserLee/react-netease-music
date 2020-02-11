@@ -1,16 +1,25 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Icon from 'components/Icon';
-import { Modal, Button, Input, message } from 'antd';
+import { Modal, Button, Input, message, Avatar } from 'antd';
 import { connect } from 'react-redux';
 import * as userActions from 'store/user/action';
 import { bindActionCreators } from 'redux';
+import { toRem, getStorage, UID_KEY, isDef } from 'utils';
+
 import './index.scss';
 
 const User = props => {
+    const {
+        user: { nickname, avatarUrl }
+    } = props;
     const [visible, setVisible] = useState(false);
+    const [cfmVisible, setCfmVisible] = useState(false);
     const [inputVal, setInputVal] = useState('');
     const handleOpenModal = () => {
         setVisible(true);
+    };
+    const handleOpenConfirm = () => {
+        setCfmVisible(true);
     };
     const handleLogin = () => {
         if (!inputVal) {
@@ -23,22 +32,62 @@ const User = props => {
             }
         });
     };
+
+    const handleLogout = () => {
+        props.userActions.logout().then(() => {
+            setCfmVisible(false);
+        });
+    };
+
     const handleCancel = () => {
         setVisible(false);
     };
 
+    const handleCfmCancel = () => {
+        setCfmVisible(false);
+    };
     const handleInputChange = e => {
         setInputVal(e.target.value);
     };
+
+    // 初始化登录
+    useEffect(() => {
+        const uid = getStorage(UID_KEY);
+
+        if (isDef(uid)) {
+            props.userActions.login(uid);
+        }
+    }, [props.userActions]);
     return (
         <Fragment>
-            <div className='user-wrapper' onClick={handleOpenModal}>
-                <Icon type={'yonghu'} size={24} />
-                <p>未登录</p>
-            </div>
+            {props.isLogin ? (
+                <div className='user-wrapper' onClick={handleOpenConfirm}>
+                    <Avatar src={avatarUrl} />
+                    <p>{nickname}</p>
+                </div>
+            ) : (
+                <div className='user-wrapper' onClick={handleOpenModal}>
+                    <Icon type={'yonghu'} size={24} />
+                    <p>未登录</p>
+                </div>
+            )}
+            <Modal
+                visible={cfmVisible}
+                title='提示'
+                width={toRem(320)}
+                onCancel={handleCfmCancel}
+                footer={[
+                    <Button key='login' type='primary' onClick={handleLogout} className='login-btn'>
+                        确认
+                    </Button>
+                ]}
+            >
+                <p className='help'>确认要注销么?</p>
+            </Modal>
             <Modal
                 visible={visible}
                 title='登录'
+                width={toRem(320)}
                 onCancel={handleCancel}
                 footer={[
                     <Button key='login' type='primary' onClick={handleLogin} className='login-btn'>
@@ -76,6 +125,12 @@ const User = props => {
         </Fragment>
     );
 };
+const mapStateToProps = state => {
+    return {
+        user: state.userReducer.userInfo,
+        isLogin: state.userReducer.isLogin
+    };
+};
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -83,7 +138,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(
-    null,
-    mapDispatchToProps
-)(User);
+export default connect(mapStateToProps, mapDispatchToProps)(User);

@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import Icon from 'components/Icon';
 import User from 'components/User';
+import SongSheet from 'components/SongSheet';
 import { menuRoutes } from 'router';
 import './index.scss';
 
@@ -22,6 +23,7 @@ function Menu() {
                         );
                     })}
                 </ul>
+                <SongSheet />
             </div>
         </div>
     );

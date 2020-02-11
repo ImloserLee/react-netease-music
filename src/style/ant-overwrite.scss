@@ -50,11 +50,32 @@ $input-height: 24px;
         var(--font-color-grey-shallow));
 }
 
+// 登录弹窗内的输入框样式重写
 .login-body {
     @include ant-input-style(var(--input-color),
         var(--input-bgcolor),
         var(--font-color-grey-shallow));
 }
+
+// popover
+@each $direction in 'bottom''top''left''right' {
+    .ant-popover-content .ant-popover-arrow {
+        border-#{$direction}-color: var(--prompt-bg-color) !important;
+    }
+}
+
+.ant-popover-inner {
+    background: var(--prompt-bg-color) !important;
+    border: none !important;
+    text-align: left;
+    @include box-shadow;
+}
+
+.ant-popover-inner-content {
+    color: var(--font-color) !important;
+}
+
+
 
 // modal
 .ant-modal-header,
@@ -73,9 +94,17 @@ $input-height: 24px;
     padding: 18px;
 }
 
+.ant-modal-close-x:hover {
+    color: $theme-color;
+}
 
 // button
 .ant-btn-primary {
     background: $theme-color !important;
     border-color: $theme-color !important;
+}
+
+.ant-btn-primary:hover {
+    background: $theme-color-hover !important;
+    border-color: $theme-color-hover !important;
 }

@@ -1,10 +1,16 @@
-@mixin flex-center($direction: row) {
+@mixin flex-center($direction: row, $align: center, $justify:center) {
     display: flex;
     flex-direction: $direction;
-    align-items: center;
-    justify-content: center;
+    align-items: $align;
+    justify-content: $justify;
 }
 
 @mixin box-shadow {
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+@mixin text-ellipsis() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

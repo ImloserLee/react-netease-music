@@ -2,7 +2,8 @@ import React, { memo, useState, useRef, useEffect } from 'react';
 import { findDOMNode } from 'react-dom';
 import { Input, Icon } from 'antd';
 import { getSearchHot, getSearchSuggest } from 'api/search';
-import { debounce } from 'utils/common';
+import { debounce, setStorage, getStorage, SEARCH_HISTORY_KEY, isDef } from 'utils';
+import Panel from './Panel';
 
 import './index.scss';
 
@@ -16,8 +17,9 @@ function SearchInput() {
     const [inPanel, setInPanel] = useState(false);
 
     const handleGetSearchSuggest = debounce(async value => {
-        const res = await getSearchSuggest(value);
-        console.log('%c 🧠 res: ', 'background-color: #ffe304;color:#fff;', res);
+        if (value) {
+            const res = await getSearchSuggest(value);
+        }
     }, 500);
 
     const handleFocus = () => {
@@ -26,13 +28,15 @@ function SearchInput() {
     };
 
     const handleChange = e => {
-        setSearchKeyword(e.target.value);
-        handleGetSearchSuggest(e.target.value);
+        const value = e.target.value.replace(/^ +| +$/g, '');
+        setSearchKeyword(value);
+        handleGetSearchSuggest(value);
     };
 
     const handlePressEnter = e => {
         const res = searchHistorys.concat([{ first: e.target.value }]);
         setHistorys(res);
+        setStorage(SEARCH_HISTORY_KEY, res);
         goSearch(e.target.value);
     };
 
@@ -64,41 +68,14 @@ function SearchInput() {
     }, []);
 
     useEffect(() => {
+        // 从本地读取搜索历史
+        const searchHistory = getStorage(SEARCH_HISTORY_KEY);
+
+        if (isDef(searchHistory) && searchHistory.length) {
+            setHistorys(searchHistory);
+        }
         getSearchHotList();
     }, []);
-
-    const Panel = (
-        <div className='search-panel' ref={panelEl}>
-            <div className='search-panel-hot'>
-                <p className='panel-title'>热门搜索</p>
-                <ul>
-                    {searchHots.length
-                        ? searchHots.map((hot, index) => {
-                              return (
-                                  <li className='panel-tag' key={index}>
-                                      {hot.first}
-                                  </li>
-                              );
-                          })
-                        : null}
-                </ul>
-            </div>
-            <div className='search-panel-history'>
-                <p className='panel-title'>搜索历史</p>
-                <ul>
-                    {searchHistorys.length
-                        ? searchHistorys.map((hot, index) => {
-                              return (
-                                  <li className='panel-tag' key={index}>
-                                      {hot.first}
-                                  </li>
-                              );
-                          })
-                        : null}
-                </ul>
-            </div>
-        </div>
-    );
 
     return (
         <div className='search-wrapper'>
@@ -111,7 +88,12 @@ function SearchInput() {
                 onChange={handleChange}
                 prefix={<Icon type='search' />}
             />
-            {panelVisible && inPanel && Panel}
+            {panelVisible && inPanel && (
+                <div className='search-panel-wrapper' ref={panelEl}>
+                    <Panel items={searchHots} />
+                    <Panel items={searchHistorys} />
+                </div>
+            )}
         </div>
     );
 }

@@ -1,0 +1,22 @@
+.search-panel {
+    margin-bottom: 30px;
+
+    .panel-title {
+        color: var(--font-color-grey);
+    }
+
+    .panel-tag {
+        display: inline-block;
+        margin: 0 5px 10px 0;
+        padding: 5px 16px;
+        border: 1px solid var(--button-border-color);
+        border-radius: 2px;
+        text-align: center;
+        color: var(--tag-color);
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--button-hover-bgcolor);
+        }
+    }
+}
