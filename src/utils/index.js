@@ -4,3 +4,4 @@ export * from './storage';
 export * from './rem';
 export * from './http';
 export * from './playlist';
+export * from './suggest';

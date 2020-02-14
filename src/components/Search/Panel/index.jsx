@@ -2,10 +2,10 @@ import React from 'react';
 import './index.scss';
 
 function Panel(props) {
-    const { items } = props;
+    const { items, title } = props;
     return (
         <div className='search-panel'>
-            <p className='panel-title'>热门搜索</p>
+            {items.length ? <p className='panel-title'>{title}</p> : null}
             <ul>
                 {items.length
                     ? items.map((hot, index) => {

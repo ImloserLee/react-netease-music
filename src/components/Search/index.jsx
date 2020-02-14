@@ -1,9 +1,10 @@
-import React, { memo, useState, useRef, useEffect } from 'react';
+import React, { memo, useState, useRef, useEffect, Fragment } from 'react';
 import { findDOMNode } from 'react-dom';
 import { Input, Icon } from 'antd';
 import { getSearchHot, getSearchSuggest } from 'api/search';
-import { debounce, setStorage, getStorage, SEARCH_HISTORY_KEY, isDef } from 'utils';
+import { debounce, setStorage, getStorage, SEARCH_HISTORY_KEY, isDef, genSuggestList } from 'utils';
 import Panel from './Panel';
+import Suggest from './Suggest';
 
 import './index.scss';
 
@@ -12,13 +13,16 @@ function SearchInput() {
     const inputEl = useRef();
     const [searchKeyword, setSearchKeyword] = useState('');
     const [searchHots, setSearchHots] = useState([]);
-    const [searchHistorys, setHistorys] = useState([]);
+    const [searchHistorys, setSearchHistory] = useState([]);
+    const [searchSuggest, setSearchSuggest] = useState([]);
     const [panelVisible, setPanelVisible] = useState(false);
     const [inPanel, setInPanel] = useState(false);
 
     const handleGetSearchSuggest = debounce(async value => {
         if (value) {
             const res = await getSearchSuggest(value);
+            const ret = genSuggestList(res);
+            setSearchSuggest(ret);
         }
     }, 500);
 
@@ -35,7 +39,7 @@ function SearchInput() {
 
     const handlePressEnter = e => {
         const res = searchHistorys.concat([{ first: e.target.value }]);
-        setHistorys(res);
+        setSearchHistory(res);
         setStorage(SEARCH_HISTORY_KEY, res);
         goSearch(e.target.value);
     };
@@ -72,7 +76,7 @@ function SearchInput() {
         const searchHistory = getStorage(SEARCH_HISTORY_KEY);
 
         if (isDef(searchHistory) && searchHistory.length) {
-            setHistorys(searchHistory);
+            setSearchHistory(searchHistory);
         }
         getSearchHotList();
     }, []);
@@ -90,8 +94,15 @@ function SearchInput() {
             />
             {panelVisible && inPanel && (
                 <div className='search-panel-wrapper' ref={panelEl}>
-                    <Panel items={searchHots} />
-                    <Panel items={searchHistorys} />
+                    {/* 有搜索关键字以及搜索出来的数据中有一项有data这个数据，就需要展示检索到的面板 */}
+                    {searchKeyword && searchSuggest.some(suggest => suggest.data) ? (
+                        <Suggest items={searchSuggest} />
+                    ) : (
+                        <Fragment>
+                            <Panel items={searchHots} title={'热门搜索'} />
+                            <Panel items={searchHistorys} title={'搜索历史'} />
+                        </Fragment>
+                    )}
                 </div>
             )}
         </div>
