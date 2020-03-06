@@ -1,4 +1,4 @@
-import { get } from 'utils/http';
+import { get } from 'utils';
 import url from './url';
 
 export const getSearchHot = async () => {

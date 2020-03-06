@@ -1,7 +1,12 @@
 import React from 'react';
+import { Banner } from './components';
 
-const Discovery = () => {
-    return <div>发现音乐</div>;
-};
+function Discovery() {
+    return (
+        <div>
+            <Banner />
+        </div>
+    );
+}
 
 export default Discovery;
