@@ -6,3 +6,10 @@ export const getTopPlaylists = async params => {
 
     return res;
 };
+
+// 获取歌单
+export const getPlaylists = async params => {
+    const res = await get(`/top/playlist`, params);
+
+    return res;
+};

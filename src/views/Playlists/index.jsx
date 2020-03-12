@@ -1,7 +1,9 @@
 import React, { memo, useEffect, useState } from 'react';
 import TopPlaylistCard from 'components/TopPlaylistCard';
 import Tabs from 'components/Tabs';
-import { getTopPlaylists } from 'api/playlist';
+import PlaylistCard from 'components/PlaylistCard';
+import { getTopPlaylists, getPlaylists } from 'api/playlist';
+import { getPageOffset } from 'utils';
 import './index.scss';
 
 const TABS = [
@@ -21,8 +23,12 @@ const TABS = [
     '旅行'
 ];
 
+const PAGE_SIZE = 50;
+
 function Playlists() {
     const [topPlaylist, setTopPlaylist] = useState({});
+    const [songPlaylists, setSongPlaylists] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
     // 获取顶部精品歌单数据,默认是全部分类
     const getTopPlayData = async (index = 0) => {
         const { playlists } = await getTopPlaylists({
@@ -30,7 +36,20 @@ function Playlists() {
             cat: TABS[index]
         });
 
-        setTopPlaylist(playlists[0]);
+        setTopPlaylist(playlists[0] || {});
+    };
+
+    // 获取歌单列表数据
+    const getPlaylistsData = async (index = 0) => {
+        const { playlists } = await getPlaylists({
+            limit: PAGE_SIZE,
+            cat: TABS[index],
+            offset: getPageOffset(currentPage, PAGE_SIZE)
+        });
+
+        setSongPlaylists(playlists);
+
+        console.log('%c 🧠 playlists: ', 'background-color: #3F7CFF;color:#fff;', playlists);
     };
 
     const handleTabChange = index => {
@@ -39,13 +58,29 @@ function Playlists() {
 
     useEffect(() => {
         getTopPlayData();
+        getPlaylistsData();
+        // eslint-disable-next-line
     }, []);
 
     return (
         <div className='playlist-wrapper'>
             <div className='top-play-list-card'>
-                <TopPlaylistCard {...topPlaylist} />
+                {topPlaylist.id && <TopPlaylistCard {...topPlaylist} />}
+
                 <Tabs tabs={TABS} type='small' align='right' tabChange={handleTabChange} />
+                <div className='playlist-cards'>
+                    {songPlaylists.length &&
+                        songPlaylists.map(list => {
+                            return (
+                                <PlaylistCard
+                                    copywriter={`播放量: ${list.playCount}`}
+                                    name={list.name}
+                                    picUrl={list.coverImgUrl}
+                                    key={list.id}
+                                />
+                            );
+                        })}
+                </div>
             </div>
         </div>
     );

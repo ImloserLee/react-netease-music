@@ -5,5 +5,10 @@
 
     .top-play-list-card {
         margin-bottom: 16px;
+
+        .playlist-cards {
+            display: flex;
+            flex-wrap: wrap;
+        }
     }
 }
