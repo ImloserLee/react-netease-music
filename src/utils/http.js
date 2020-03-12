@@ -94,5 +94,5 @@ export function get(url, params = {}, headers = {}) {
         headers
     });
 }
-
+_axios.prototype = axios;
 export default _axios;

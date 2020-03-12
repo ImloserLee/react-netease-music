@@ -1,0 +1,58 @@
+.mvcard-wrapper {
+    min-width: 140px;
+    cursor: pointer;
+
+    .img-wrap {
+        position: relative;
+        padding-top: 56%;
+
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+            @include abs-stretch;
+        }
+
+        .mvplay-icon-wrap {
+            opacity: 0;
+            @include abs-center;
+        }
+
+        .mvplay-count-wrap {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            right: 2px;
+            top: 2px;
+            font-size: $font-size-sm;
+            color: $white;
+
+            i {
+                display: inline-block;
+                margin-right: 4px;
+            }
+        }
+
+        &:hover {
+            .mvplay-icon-wrap {
+                opacity: 1;
+                transition: all .3s;
+            }
+        }
+    }
+
+    .name {
+        margin-top: 8px;
+        margin-bottom: 0;
+        @include text-ellipsis;
+        font-size: $font-size-sm;
+    }
+
+    .singer {
+        margin-top: 4px;
+        margin-bottom: 0;
+        @include text-ellipsis;
+        font-size: $font-size-sm;
+        color: var(--font-color-grey-shallow);
+    }
+}

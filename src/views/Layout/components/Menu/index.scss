@@ -6,6 +6,8 @@
     background-color: var(--menu-bgcolor);
 
     .menu-list {
+        overflow: auto;
+
         .menu-item {
             cursor: pointer;
 

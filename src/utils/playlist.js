@@ -1,3 +1,7 @@
+/**
+ * 侧边栏相关工具函数
+ */
+
 // 生成创建的歌单列表
 function genCreatePlaylist(userPlaylist, userId) {
     return userPlaylist.filter(playlist => {

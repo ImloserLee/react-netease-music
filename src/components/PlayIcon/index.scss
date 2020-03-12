@@ -1,0 +1,9 @@
+.play-icon-wrapper {
+    @include flex-center();
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, .5);
+
+    .play-icon {
+        color: $theme-color;
+    }
+}

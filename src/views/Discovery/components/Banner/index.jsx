@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { Carousel } from 'antd';
 import { getBanner } from 'api/discovery';
 import './index.scss';
@@ -11,10 +11,9 @@ function Banner() {
     };
     useEffect(() => {
         getBannerList();
-        // eslint-disable-next-lin
     }, []);
     return (
-        <Carousel className='banner-carousel'>
+        <Carousel autoplay className='banner-carousel'>
             {bannerList.length &&
                 bannerList.map(banner => {
                     return (
@@ -30,4 +29,4 @@ function Banner() {
     );
 }
 
-export default Banner;
+export default memo(Banner);

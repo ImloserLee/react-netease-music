@@ -1,3 +1,7 @@
+/**
+ * 搜索栏相关工具函数
+ */
+
 function genArtistisText(artists) {
     return (artists || []).map(({ name }) => name).join('/');
 }

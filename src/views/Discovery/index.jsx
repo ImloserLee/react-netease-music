@@ -1,10 +1,14 @@
 import React from 'react';
-import { Banner } from './components';
+import { Banner, NewPlaylists, NewSongs, NewMvs } from './components';
+import './index.scss';
 
 function Discovery() {
     return (
-        <div>
+        <div className='discovery-wrapper'>
             <Banner />
+            <NewPlaylists />
+            <NewSongs />
+            <NewMvs />
         </div>
     );
 }

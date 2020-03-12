@@ -1,0 +1,10 @@
+.title-wrapper {
+    display: flex;
+    padding: 12px 0;
+
+    .title {
+        margin-bottom: 0;
+        font-size: $font-size-title;
+        color: var(--font-color-white)
+    }
+}

@@ -1,0 +1,57 @@
+.song-card-wrapper {
+    display: flex;
+    padding: 8px;
+    font-size: $font-size-sm;
+    cursor: pointer;
+
+    &:hover {
+        background: var(--light-bgcolor)
+    }
+
+    .order-wrapper {
+        @include flex-center();
+        width: 30px;
+        margin-right: 8px;
+
+    }
+
+    .covery {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        margin-right: 8px;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .play-icon-wrapper {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%)
+        }
+    }
+
+    .song-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        flex: 1;
+        overflow: hidden;
+
+        p {
+            margin-bottom: 0;
+        }
+
+        .song-name {
+            @include text-ellipsis;
+            color: var(--font-color-white);
+        }
+
+        .singer {
+            @include text-ellipsis;
+        }
+    }
+}

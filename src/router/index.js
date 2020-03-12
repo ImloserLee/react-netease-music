@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-
+import { Redirect } from 'react-router-dom';
 const SuspenseComponent = Component => props => {
     return (
         <Suspense fallback={null}>
@@ -48,6 +48,11 @@ const routes = [
         path: '/',
         component: SuspenseComponent(Layout),
         routes: [
+            {
+                path: '/',
+                exact: true,
+                render: () => <Redirect to={'/discovery'} />
+            },
             {
                 path: '/search/:keywords',
                 component: SuspenseComponent(Search)

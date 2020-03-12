@@ -1,5 +1,5 @@
 .header {
-    padding: 0 20px;
+    padding: 0 20px 0 10px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -15,6 +15,7 @@
 
         &__buttons {
             @include flex-center;
+            margin-top: -10px;
 
             &:hover {
                 .mac-button>i {

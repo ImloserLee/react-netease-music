@@ -1,0 +1,63 @@
+.playlist-card {
+    position: relative;
+    width: calc(20% - 8px);
+    margin: 4px;
+    margin-bottom: 32px;
+    cursor: pointer;
+
+    .card-img {
+        position: relative;
+        width: 100%;
+        padding-top: 100%;
+        margin-bottom: 8px;
+        border-radius: 4px;
+        overflow: hidden;
+
+        img {
+            @include abs-stretch;
+            width: 100%;
+            height: 100%;
+        }
+
+        .card-desc {
+            position: absolute;
+            padding: 6px;
+            left: 0;
+            top: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, .4);
+            transform: translateY(-100%);
+            transition: all .3s;
+
+            .desc {
+                color: $white;
+                font-size: $font-size-sm;
+            }
+        }
+
+        .card-icon {
+            opacity: 0;
+            position: absolute;
+            right: 4px;
+            bottom: 4px;
+            font-size: 24px;
+            transition: all 0.3s;
+            color: $white;
+        }
+
+        &:hover {
+            .card-desc {
+                transform: translateY(0)
+            }
+
+            .card-icon {
+                opacity: 1;
+            }
+        }
+    }
+
+    .card-name {
+        font-size: $font-size-sm;
+        @include text-ellipsis();
+    }
+}
