@@ -2,6 +2,7 @@
 $input-height: 24px;
 
 @mixin ant-input-style($color, $bg-color, $placeholder-color) {
+
     .ant-input {
         height: $input-height !important;
         line-height: $input-height !important;
@@ -22,10 +23,8 @@ $input-height: 24px;
     .ant-input-prefix {
         line-height: $input-height + 3px !important;
 
-        i {
-            color: #{$color} !important;
-            transition: none !important;
-        }
+        color: #{$color} !important;
+        transition: none !important;
     }
 
     input::-webkit-input-placeholder {
@@ -36,6 +35,13 @@ $input-height: 24px;
 // 外部覆写input-theme样式
 @mixin ant-input-theme($color, $bg-color, $placeholder-color: $color) {
     /deep/.ant-input-affix-wrapper {
+        padding-top: 0;
+        padding-bottom: 0;
+        border: none;
+        box-shadow: none;
+        outline: none;
+        background: #{$bg-color};
+
         @include ant-input-style($color, $bg-color, $placeholder-color);
     }
 
@@ -44,11 +50,11 @@ $input-height: 24px;
     }
 }
 
-.ant-input-affix-wrapper {
+/* .ant-input-affix-wrapper {
     @include ant-input-style(var(--input-color),
         var(--input-bgcolor),
         var(--font-color-grey-shallow));
-}
+} */
 
 // 登录弹窗内的输入框样式重写
 .login-body {
@@ -81,7 +87,7 @@ $input-height: 24px;
 .ant-modal-header,
 .ant-modal-content {
     background: var(--modal-bg-color) !important;
-    border-bottom: none;
+    border-bottom: none !important;
 }
 
 .ant-modal-title,
@@ -90,12 +96,43 @@ $input-height: 24px;
 }
 
 .ant-modal-footer {
-    border-top: none;
+    border-top: none !important;
     padding: 18px;
 }
 
 .ant-modal-close-x:hover {
     color: $theme-color;
+}
+
+// pagination
+.ant-pagination {
+
+    .ant-pagination-item-link {
+        color: var(--font-color) !important;
+
+        span {
+            color: var(--font-color) !important;
+        }
+    }
+
+    .ant-pagination-item {
+        border: none;
+        background: inherit !important;
+
+        a {
+            font-weight: 500;
+            height: 24px !important;
+            line-height: 24px !important;
+            color: var(--font-color) !important;
+        }
+
+        &-active,
+        &:hover {
+            a {
+                color: $theme-color !important;
+            }
+        }
+    }
 }
 
 // button

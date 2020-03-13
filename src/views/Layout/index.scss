@@ -1,5 +1,7 @@
 .layout-wrapper {
     height: 100%;
+    background-color: var(--body-bgcolor);
+    font-size: $font-size;
 
     .layout-body {
         display: flex;

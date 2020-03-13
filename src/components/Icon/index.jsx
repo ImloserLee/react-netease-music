@@ -1,10 +1,10 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, forwardRef } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { toRem } from 'utils/rem';
 import './index.scss';
 
-function Icon(props) {
+const Icon = forwardRef((props, ref) => {
     const { type, className, size, backdrop, color, click } = props;
 
     const cls = classnames(
@@ -45,7 +45,7 @@ function Icon(props) {
     }
 
     return MyIcon;
-}
+});
 
 Icon.defaultProps = {
     size: 16,

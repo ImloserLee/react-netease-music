@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
+import LazyLoad from 'react-lazyload';
 import PlayIcon from '../PlayIcon';
 import Icon from '../Icon';
 import './index.scss';
@@ -9,7 +10,9 @@ function MvCard(props) {
     return (
         <div className='mvcard-wrapper'>
             <div className='img-wrap'>
-                <img src={picUrl} alt='' />
+                <LazyLoad overflow={true}>
+                    <img src={picUrl} alt='' />
+                </LazyLoad>
                 <div className='mvplay-count-wrap'>
                     <Icon type='play' />
                     {playCount}

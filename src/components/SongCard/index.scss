@@ -13,6 +13,9 @@
         width: 30px;
         margin-right: 8px;
 
+        .order {
+            color: var(--font-color);
+        }
     }
 
     .covery {
@@ -51,6 +54,7 @@
         }
 
         .singer {
+            color: var(--font-color);
             @include text-ellipsis;
         }
     }

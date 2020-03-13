@@ -28,11 +28,7 @@ module.exports = override(
             rule.use.push({
                 loader: require.resolve('sass-resources-loader'),
                 options: {
-                    resources: [
-                        './src/style/variables.scss',
-                        './src/style/mixin.scss',
-                        './src/style/ant-overwrite.scss'
-                    ]
+                    resources: ['./src/style/variables.scss', './src/style/mixin.scss']
                 }
             });
         }

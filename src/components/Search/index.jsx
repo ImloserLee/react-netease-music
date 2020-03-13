@@ -1,6 +1,7 @@
 import React, { memo, useState, useRef, useEffect, Fragment } from 'react';
 import { findDOMNode } from 'react-dom';
-import { Input, Icon } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import { Input } from 'antd';
 import { getSearchHot, getSearchSuggest } from 'api/search';
 import { debounce, setStorage, getStorage, SEARCH_HISTORY_KEY, isDef, genSuggestList } from 'utils';
 import Panel from './Panel';
@@ -90,7 +91,7 @@ function SearchInput() {
                 ref={inputEl}
                 placeholder='搜索'
                 onChange={handleChange}
-                prefix={<Icon type='search' />}
+                prefix={<SearchOutlined />}
             />
             {panelVisible && inPanel && (
                 <div className='search-panel-wrapper' ref={panelEl}>

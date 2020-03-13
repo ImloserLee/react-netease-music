@@ -46,6 +46,7 @@
         margin-bottom: 0;
         @include text-ellipsis;
         font-size: $font-size-sm;
+        color: var(--font-color);
     }
 
     .singer {

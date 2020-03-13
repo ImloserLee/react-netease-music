@@ -57,6 +57,7 @@
     }
 
     .card-name {
+        color: var(--font-color);
         font-size: $font-size-sm;
         @include text-ellipsis();
     }

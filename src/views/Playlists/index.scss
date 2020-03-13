@@ -10,5 +10,10 @@
             display: flex;
             flex-wrap: wrap;
         }
+
+        .pagination-wrap {
+            display: flex;
+            justify-content: flex-end;
+        }
     }
 }

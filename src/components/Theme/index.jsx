@@ -80,12 +80,15 @@ function Theme() {
         [visible]
     );
 
-    const hidePop = event => {
-        // 点击popver外部隐藏popver
-        if (visible && popEl.current && !popEl.current.contains(event.target)) {
-            setVisible(false);
-        }
-    };
+    const hidePop = useCallback(
+        event => {
+            // 点击popver外部隐藏popver
+            if (visible && popEl.current && !popEl.current.contains(event.target)) {
+                setVisible(false);
+            }
+        },
+        [visible]
+    );
 
     useEffect(() => {
         const theme = getStorage(THEME_KEY) ? getStorage(THEME_KEY) : themesObj.white;
@@ -98,7 +101,7 @@ function Theme() {
         return () => {
             document.removeEventListener('click', hidePop);
         };
-    });
+    }, [hidePop]);
     return (
         <div className='theme-wrapper'>
             <Popover placement='bottomRight' content={content} visible={visible}>
