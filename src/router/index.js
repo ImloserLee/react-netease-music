@@ -13,7 +13,7 @@ const Search = lazy(() => import('views/Search'));
 const Discovery = lazy(() => import('views/Discovery'));
 const Playlists = lazy(() => import('views/Playlists'));
 const Songs = lazy(() => import('views/Songs'));
-const Mv = lazy(() => import('views/Mv'));
+const Mvs = lazy(() => import('views/Mvs'));
 
 // 侧边栏显示的菜单
 export const menuRoutes = [
@@ -36,8 +36,8 @@ export const menuRoutes = [
         icon: 'yinyue'
     },
     {
-        path: '/mv',
-        component: SuspenseComponent(Mv),
+        path: '/mvs',
+        component: SuspenseComponent(Mvs),
         title: '最新MV',
         icon: 'mv'
     }

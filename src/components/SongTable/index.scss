@@ -1,0 +1,41 @@
+.song-table-wrapper {
+    .img-wrap {
+        position: relative;
+        @include img-wrap(60px);
+
+        img {
+            border-radius: 4px;
+        }
+
+        .img-play-icon {
+            @include abs-center;
+        }
+    }
+
+    .index-wrap {
+        text-align: center;
+        color: var(--font-color-grey-shallow);
+    }
+
+    .song-table-name-cell {
+        @include text-ellipsis;
+        display: flex;
+        align-items: center;
+        flex: 0 0 24px;
+
+        .song-table-name {
+            overflow: hidden;
+            @include text-ellipsis;
+        }
+
+
+    }
+
+    .table-row-active {
+        .song-active {
+            color: $theme-color;
+        }
+    }
+
+
+}

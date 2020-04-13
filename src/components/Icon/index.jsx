@@ -1,4 +1,4 @@
-import React, { memo, useMemo, forwardRef } from 'react';
+import React, { memo, useMemo, forwardRef, useCallback } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { toRem } from 'utils/rem';
@@ -26,11 +26,14 @@ const Icon = forwardRef((props, ref) => {
         return retStyle;
     }, [size]);
 
-    const handleClick = e => {
-        if (click) {
-            click(e);
-        }
-    };
+    const handleClick = useCallback(
+        e => {
+            if (click) {
+                click(e);
+            }
+        },
+        [click]
+    );
 
     const MyIcon = <i className={cls} style={getIconStyle} onClick={handleClick}></i>;
 

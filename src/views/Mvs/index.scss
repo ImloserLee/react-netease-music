@@ -1,0 +1,23 @@
+.mvs-wrapper {
+    padding: 12px;
+    max-width: $center-content-max-width;
+    margin: auto;
+
+    .tabs-wrap {
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+
+        .tabs-type {
+            color: var(--font-color);
+            font-size: $font-size-sm;
+        }
+    }
+
+    @include list(25%);
+
+    .pagination-wrap {
+        display: flex;
+        justify-content: flex-end;
+    }
+}

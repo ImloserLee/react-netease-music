@@ -10,7 +10,7 @@ function MvCard(props) {
     return (
         <div className='mvcard-wrapper'>
             <div className='img-wrap'>
-                <LazyLoad overflow={true}>
+                <LazyLoad overflow={true} offset={100}>
                     <img src={picUrl} alt='' />
                 </LazyLoad>
                 <div className='mvplay-count-wrap'>
@@ -30,7 +30,8 @@ function MvCard(props) {
 MvCard.propTypes = {
     picUrl: PropTypes.string,
     name: PropTypes.string,
-    artistName: PropTypes.string
+    artistName: PropTypes.string,
+    playCount: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 export default memo(MvCard);

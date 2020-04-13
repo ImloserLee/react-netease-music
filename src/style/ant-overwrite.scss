@@ -1,3 +1,26 @@
+//table
+.ant-table {
+    background-color: var(--body-bgcolor) !important;
+
+
+
+    tbody {
+        td {
+            color: var(--font-color);
+            padding: 4px !important;
+            font-size: $font-size-sm !important;
+            border-bottom: none !important;
+        }
+    }
+}
+
+.ant-table tbody>tr.ant-table-row:hover>td {
+    background-color: var(--playlist-hover-bgcolor) !important;
+}
+
+
+
+
 //input
 $input-height: 24px;
 
@@ -81,8 +104,6 @@ $input-height: 24px;
     color: var(--font-color) !important;
 }
 
-
-
 // modal
 .ant-modal-header,
 .ant-modal-content {
@@ -144,4 +165,11 @@ $input-height: 24px;
 .ant-btn-primary:hover {
     background: $theme-color-hover !important;
     border-color: $theme-color-hover !important;
+}
+
+// spin
+.ant-spin {
+    .ant-spin-dot-item {
+        background-color: $theme-color !important;
+    }
 }

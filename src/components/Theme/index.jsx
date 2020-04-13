@@ -48,6 +48,7 @@ function Theme() {
     const changeTheme = themeKey => {
         setStorage(THEME_KEY, themeKey);
         const theme = themes[themeKey].file;
+
         Object.keys(theme).forEach(key => {
             const value = theme[key];
 
