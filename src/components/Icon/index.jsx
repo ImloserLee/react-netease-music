@@ -5,7 +5,7 @@ import { toRem } from 'utils/rem';
 import './index.scss';
 
 const Icon = forwardRef((props, ref) => {
-    const { type, className, size, backdrop, color, click } = props;
+    const { type, className, size, backdrop, color, click, mouseEnter, mouseOut } = props;
 
     const cls = classnames(
         {
@@ -28,14 +28,28 @@ const Icon = forwardRef((props, ref) => {
 
     const handleClick = useCallback(
         e => {
-            if (click) {
-                click(e);
-            }
+            click && click(e);
         },
         [click]
     );
 
-    const MyIcon = <i className={cls} style={getIconStyle} onClick={handleClick}></i>;
+    const handleMouseEnter = useCallback(() => {
+        mouseEnter && mouseEnter();
+    }, [mouseEnter]);
+
+    const handleMouseOut = useCallback(() => {
+        mouseOut && mouseOut();
+    }, [mouseOut]);
+
+    const MyIcon = (
+        <i
+            className={cls}
+            style={getIconStyle}
+            onClick={handleClick}
+            onMouseEnter={handleMouseEnter}
+            onMouseOut={handleMouseOut}
+        ></i>
+    );
 
     if (backdrop) {
         const backdropSizeRatio = 1.56;
@@ -63,7 +77,9 @@ Icon.propTypes = {
     backdrop: PropTypes.bool,
     type: PropTypes.string.isRequired,
     color: PropTypes.string,
-    click: PropTypes.func
+    click: PropTypes.func,
+    mouseEnter: PropTypes.func,
+    mouseOut: PropTypes.func
 };
 
 export default memo(Icon);

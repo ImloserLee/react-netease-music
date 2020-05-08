@@ -1,0 +1,46 @@
+.playlist-wrap {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: $mini-player-height;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    background: var(--playlist-bgcolor);
+    z-index: $playlist-z-index;
+    @include box-shadow;
+
+    .play-header {
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 40px;
+        border-bottom: 1px solid var(--border);
+
+        .total {
+            font-size: $font-size-sm;
+        }
+
+        .remove {
+            @include flex-center;
+            cursor: pointer;
+            font-size: $font-size-sm;
+
+            .text {
+                display: inline-block;
+                margin-left: 4px;
+            }
+        }
+    }
+
+    .playlist-table {
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .playlist-tips {
+        @include flex-center();
+        flex: 1;
+    }
+}

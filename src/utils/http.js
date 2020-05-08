@@ -1,7 +1,12 @@
 /* eslint-disable */
 import axios from 'axios';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { Spin } from 'antd';
 
 const baseURL = 'http://localhost:4000';
+
+let requestCount = 0;
 
 const config = {
     baseURL: baseURL || '',
@@ -15,10 +20,33 @@ const config = {
 
 const _axios = axios.create(config);
 
+// 展示loading
+function showLoading() {
+    if (requestCount === 0) {
+        const dom = document.createElement('div');
+        dom.setAttribute('id', 'loading');
+        document.body.appendChild(dom);
+        ReactDOM.render(<Spin tip='加载中...' />, dom);
+    }
+    requestCount++;
+}
+
+// 隐藏loading
+function hideLoading() {
+    requestCount--;
+    if (requestCount === 0) {
+        document.body.removeChild(document.getElementById('loading'));
+    }
+}
+
 // 请求拦截
 _axios.interceptors.request.use(
     originConfig => {
         const reqConfig = { ...originConfig };
+
+        if (reqConfig.headers.isLoading !== false) {
+            showLoading();
+        }
 
         if (!reqConfig.url) {
             throw new Error('request need url');
@@ -47,6 +75,9 @@ _axios.interceptors.request.use(
         return reqConfig;
     },
     error => {
+        if (error.config.headers.isLoading !== false) {
+            hideLoading();
+        }
         Promise.reject(error);
     }
 );
@@ -54,6 +85,9 @@ _axios.interceptors.request.use(
 // 响应拦截
 _axios.interceptors.response.use(
     response => {
+        if (response.config.headers.isLoading !== false) {
+            hideLoading();
+        }
         const res = response.data;
 
         if (res.code !== 200) {
@@ -62,6 +96,9 @@ _axios.interceptors.response.use(
         return res;
     },
     error => {
+        if (error.config.headers.isLoading !== false) {
+            hideLoading();
+        }
         return Promise.reject(error);
     }
 );

@@ -2,14 +2,13 @@
 .ant-table {
     background-color: var(--body-bgcolor) !important;
 
-
-
     tbody {
         td {
             color: var(--font-color);
             padding: 4px !important;
             font-size: $font-size-sm !important;
             border-bottom: none !important;
+            vertical-align: middle;
         }
     }
 }
@@ -169,6 +168,8 @@ $input-height: 24px;
 
 // spin
 .ant-spin {
+    color: $theme-color !important;
+
     .ant-spin-dot-item {
         background-color: $theme-color !important;
     }

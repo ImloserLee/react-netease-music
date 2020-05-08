@@ -3,7 +3,6 @@ import Tabs from 'components/Tabs';
 import SongTable from 'components/SongTable';
 import { getTopSongs } from 'api/song';
 import { createSong } from 'utils';
-import { Spin } from 'antd';
 import './index.scss';
 
 const TABS = [
@@ -17,9 +16,7 @@ const TABS = [
 function Songs() {
     const [songs, setSongs] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [loading, setLoading] = useState(false);
     const getSongs = async () => {
-        setLoading(true);
         const { data } = await getTopSongs(TABS[currentIndex].type);
 
         const ret = data.map(song => {
@@ -43,7 +40,6 @@ function Songs() {
         });
 
         setSongs(ret);
-        setLoading(false);
     };
 
     const handleTabChange = useCallback(index => {
@@ -57,9 +53,7 @@ function Songs() {
     return (
         <div className='songs-wrapper'>
             <Tabs tabs={TABS} type='small' align='right' tabChange={handleTabChange}></Tabs>
-            <Spin spinning={loading} size='large'>
-                <SongTable songs={songs}></SongTable>
-            </Spin>
+            <SongTable songs={songs}></SongTable>
         </div>
     );
 }

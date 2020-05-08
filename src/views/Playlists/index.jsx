@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Pagination, Spin } from 'antd';
+import { Pagination } from 'antd';
 import TopPlaylistCard from 'components/TopPlaylistCard';
 import Tabs from 'components/Tabs';
 import PlaylistCard from 'components/PlaylistCard';
@@ -32,7 +32,6 @@ function Playlists() {
     const [songTotal, setSongTotal] = useState(0); // 歌单总数
     const [currentIndex, setCurrentIndex] = useState(0); // tab高亮的下标
     const [pageIndex, setPageIndex] = useState(1); // 当前的页数
-    const [loading, setLoading] = useState(false);
 
     // 获取顶部精品歌单数据,默认是全部分类
     const getTopPlayData = async () => {
@@ -46,7 +45,6 @@ function Playlists() {
 
     // 获取歌单列表数据
     const getPlaylistsData = async () => {
-        setLoading(true);
         const { playlists, total } = await getPlaylists({
             limit: PAGE_SIZE,
             cat: TABS[currentIndex],
@@ -55,7 +53,6 @@ function Playlists() {
 
         setSongPlaylists(unique(playlists));
         setSongTotal(total);
-        setLoading(false);
     };
 
     const handleTabChange = useCallback(index => {
@@ -81,32 +78,30 @@ function Playlists() {
             <div className='top-play-list-card'>
                 {topPlaylist.id && <TopPlaylistCard {...topPlaylist} />}
                 <Tabs tabs={TABS} type='small' align='right' tabChange={handleTabChange} />
-                <Spin spinning={loading} size='large'>
-                    <div className='playlist-cards'>
-                        {songPlaylists.length &&
-                            songPlaylists.map(list => {
-                                return (
-                                    <PlaylistCard
-                                        copywriter={`播放量: ${formatNumber(list.playCount)}`}
-                                        name={list.name}
-                                        picUrl={list.coverImgUrl}
-                                        key={list.id}
-                                    />
-                                );
-                            })}
+                <div className='playlist-cards'>
+                    {songPlaylists.length &&
+                        songPlaylists.map(list => {
+                            return (
+                                <PlaylistCard
+                                    copywriter={`播放量: ${formatNumber(list.playCount)}`}
+                                    name={list.name}
+                                    picUrl={list.coverImgUrl}
+                                    key={list.id}
+                                />
+                            );
+                        })}
+                </div>
+                {songTotal > 0 && (
+                    <div className='pagination-wrap'>
+                        <Pagination
+                            size='small'
+                            total={songTotal}
+                            pageSize={PAGE_SIZE}
+                            current={pageIndex}
+                            onChange={handlePaginationChange}
+                        />
                     </div>
-                    {songTotal > 0 && (
-                        <div className='pagination-wrap'>
-                            <Pagination
-                                size='small'
-                                total={songTotal}
-                                pageSize={PAGE_SIZE}
-                                current={pageIndex}
-                                onChange={handlePaginationChange}
-                            />
-                        </div>
-                    )}
-                </Spin>
+                )}
             </div>
         </div>
     );

@@ -1,7 +1,52 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback, useState, useMemo } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Popover } from 'antd';
 import Icon from 'components/Icon';
+import Volume from 'components/Volume';
+import * as musicAction from 'store/music/action';
+import { playModeMap } from 'utils';
 import './index.scss';
-function Miniplayer() {
+function Miniplayer(props) {
+    const [visible, setVisible] = useState(false);
+
+    const { playMode, isPlayListShow } = props;
+
+    // 当前播放模式
+    const currentMode = useMemo(() => {
+        return playModeMap[playMode];
+    }, [playMode]);
+
+    const playModeText = useMemo(() => {
+        return currentMode.name;
+    }, [currentMode]);
+
+    const playModeIcon = useMemo(() => {
+        return currentMode.icon;
+    }, [currentMode]);
+
+    const handleMouseEvent = useCallback(() => {
+        setVisible(!visible);
+        // eslint-disable-next-line
+    }, [visible]);
+
+    const handleChangePlayMode = useCallback(() => {
+        const modeKeys = Object.keys(playModeMap);
+        const currentModeIndex = modeKeys.findIndex(key => playModeMap[key].code === playMode);
+
+        const nextIndex = (currentModeIndex + 1) % modeKeys.length;
+        const nextModeKey = modeKeys[nextIndex];
+        const nextMode = playModeMap[nextModeKey];
+
+        props.musicAction.setPlayMode(nextMode.code);
+    }, [playMode, props.musicAction]);
+
+    const togglePlayListShow = () => {
+        props.musicAction.setPlayListShow(!isPlayListShow);
+    };
+
+    const content = <p className='miniplayer-pop-content'>{playModeText}</p>;
+
     return (
         <div className='mini-player-wrapper'>
             <div className='song'>
@@ -32,13 +77,40 @@ function Miniplayer() {
                 <Icon size={24} className='icon' type='next' />
             </div>
             <div className='mode'>
-                <Icon size={20} className='mode-item' type='loop' />
-                <Icon size={20} className='mode-item' type='playlist' />
-                <div className='volume-item'></div>
+                <Popover placement='top' content={content} visible={visible} trigger='hover'>
+                    <Icon
+                        size={20}
+                        className='mode-item'
+                        type={playModeIcon}
+                        mouseEnter={handleMouseEvent}
+                        mouseOut={handleMouseEvent}
+                        click={handleChangePlayMode}
+                    />
+                </Popover>
+                <Icon size={20} className='mode-item' type='playlist' click={togglePlayListShow} />
+                <div className='volume-item'>
+                    <Volume />
+                </div>
             </div>
             <div className='progress-bar-wrap'></div>
         </div>
     );
 }
 
-export default memo(Miniplayer);
+const mapStateToProps = state => {
+    return {
+        playMode: state.musicReducer.playMode,
+        isPlayListShow: state.musicReducer.isPlayListShow
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        musicAction: bindActionCreators(musicAction, dispatch)
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(memo(Miniplayer));

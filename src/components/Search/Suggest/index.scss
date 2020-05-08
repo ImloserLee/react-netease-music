@@ -3,7 +3,7 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        padding: 0 5px;
+        padding: 0 10px;
         color: var(--font-color-grey-shallow);
 
         .song {
@@ -15,7 +15,7 @@
         a {
             display: inline-block;
             width: 100%;
-            padding: 12px 18px;
+            padding: 12px 25px;
             color: var(--font-color);
             @include text-ellipsis;
         }

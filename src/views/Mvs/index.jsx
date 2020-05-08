@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Tabs from 'components/Tabs';
-import { Pagination, Spin } from 'antd';
+import { Pagination } from 'antd';
 import MvCard from 'components/MvCard';
 import { getAllMvs } from 'api/mv';
 import { getPageOffset, formatNumber } from 'utils';
@@ -16,7 +16,6 @@ function Mvs() {
     const [mvTotal, setMvTotal] = useState(0); // 歌单总数
     const [pageIndex, setPageIndex] = useState(1); // 当前的页数
     const [mvList, setMvList] = useState([]); // 当前的页数
-    const [loading, setLoading] = useState(false);
     const [areaActiveIndex, setAreaActiveIndex] = useState(0); // tab高亮的下标
     const [typeActiveIndex, setTypeActiveIndex] = useState(0); // tab高亮的下标
     const [sortActiveIndex, setSortActiveIndex] = useState(0); // tab高亮的下标
@@ -41,7 +40,6 @@ function Mvs() {
     }, []);
 
     const getAllMvsData = async () => {
-        setLoading(true);
         const { data, count } = await getAllMvs({
             limit: PAGE_SIZE,
             offset: getPageOffset(pageIndex, PAGE_SIZE),
@@ -54,7 +52,6 @@ function Mvs() {
         if (count) {
             setMvTotal(count);
         }
-        setLoading(false);
     };
 
     useEffect(() => {
@@ -94,24 +91,22 @@ function Mvs() {
                     }}
                 />
             </div>
-            <Spin spinning={loading} size='large'>
-                <ul className='list-wrap'>
-                    {mvList.length
-                        ? mvList.map(mv => {
-                              return (
-                                  <li className='list-item' key={mv.id}>
-                                      <MvCard
-                                          picUrl={mv.cover}
-                                          name={mv.name}
-                                          artistName={mv.artistName}
-                                          playCount={formatNumber(mv.playCount)}
-                                      />
-                                  </li>
-                              );
-                          })
-                        : null}
-                </ul>
-            </Spin>
+            <ul className='list-wrap'>
+                {mvList.length
+                    ? mvList.map(mv => {
+                          return (
+                              <li className='list-item' key={mv.id}>
+                                  <MvCard
+                                      picUrl={mv.cover}
+                                      name={mv.name}
+                                      artistName={mv.artistName}
+                                      playCount={formatNumber(mv.playCount)}
+                                  />
+                              </li>
+                          );
+                      })
+                    : null}
+            </ul>
             {mvTotal > 0 && (
                 <div className='pagination-wrap'>
                     <Pagination

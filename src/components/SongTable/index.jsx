@@ -66,7 +66,7 @@ function SongTable(props) {
                 return (
                     <div>
                         <div className='song-table-name-cell song-active'>
-                            {name}
+                            <span className='song-table-name'>{name}</span>
                             {mvId ? (
                                 <div onClick={handleGoMv}>
                                     <Icon type='mv' color='theme' size={18} />
@@ -127,6 +127,7 @@ function SongTable(props) {
 
     const handleRowClick = song => {
         props.musicAction.startSong(song);
+        props.musicAction.setPlayList(songs);
     };
 
     const isActiveSong = useCallback(
@@ -145,7 +146,7 @@ function SongTable(props) {
 
     if (songs.length) {
         return (
-            <div className='song-table-wrapper'>
+            <div className='song-table-wrap'>
                 <Table
                     dataSource={computedSongs}
                     showHeader={showHeader}

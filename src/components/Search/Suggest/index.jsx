@@ -38,4 +38,4 @@ function Suggest(props) {
     );
 }
 
-export default Suggest;
+export default React.memo(Suggest);
