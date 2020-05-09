@@ -1,3 +1,5 @@
+@import '../../style/ant-overwrite.scss';
+
 .playlist-wrap {
     position: fixed;
     top: 0;
@@ -9,6 +11,7 @@
     background: var(--playlist-bgcolor);
     z-index: $playlist-z-index;
     @include box-shadow;
+    @include ant-table-theme(var(--playlist-bgcolor));
 
     .play-header {
         padding: 10px 20px;
@@ -37,6 +40,7 @@
     .playlist-table {
         flex: 1;
         overflow-y: auto;
+        padding: 0 10px;
     }
 
     .playlist-tips {

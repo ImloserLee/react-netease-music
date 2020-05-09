@@ -27,3 +27,17 @@ export const setPlayListShow = flag => {
         flag
     };
 };
+
+export const clearPlayList = () => {
+    return {
+        type: music.CLEAR_PLAY_LIST,
+        playList: []
+    };
+};
+
+export const setPlayerShow = flag => {
+    return {
+        type: music.SET_PLAYER_SHOW,
+        flag
+    };
+};

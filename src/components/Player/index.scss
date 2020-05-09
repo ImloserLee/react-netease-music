@@ -1,0 +1,29 @@
+.player-wrap {
+    position: fixed;
+    top: $header-height;
+    bottom: $mini-player-height;
+    left: 0;
+    right: 0;
+    background: var(--player-bgcolor);
+    z-index: $song-detail-z-index;
+    transition: transform .5s
+}
+
+.alert-enter {
+    opacity: 0;
+}
+
+.alert-enter-active {
+    opacity: 1;
+    transform: translateY(100%);
+}
+
+.alert-exit {
+    transition: all 0.5s;
+    opacity: 1;
+}
+
+.alert-exit-active {
+    opacity: 0;
+    transform: translateY(100%);
+}

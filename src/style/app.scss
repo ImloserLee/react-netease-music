@@ -42,28 +42,6 @@ body {
     background-color: var(--scrollbar-color);
 }
 
-.slide-enter-active,
-.slide-leave-active {
-    transition: all 0.5s;
-    transform: none;
-}
-
-.slide-enter,
-.slide-leave-to {
-    transform: translateY(100%);
-}
-
-.fade-enter-active,
-.fade-leave-active {
-    transition: all 0.5s;
-    opacity: 1;
-}
-
-.fade-enter,
-.fade-leave-to {
-    opacity: 0;
-}
-
 // 转化为rem
 .iconfont {
     font-size: 16px;

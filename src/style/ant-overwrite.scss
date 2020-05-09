@@ -2,13 +2,18 @@
 .ant-table {
     background-color: var(--body-bgcolor) !important;
 
-    tbody {
-        td {
-            color: var(--font-color);
-            padding: 4px !important;
-            font-size: $font-size-sm !important;
-            border-bottom: none !important;
-            vertical-align: middle;
+    td,
+    th {
+        padding: 4px !important;
+        font-size: $font-size-sm !important;
+        vertical-align: middle;
+    }
+}
+
+.ant-table-thead {
+    tr {
+        th {
+            background-color: var(--body-bgcolor) !important;
         }
     }
 }
@@ -17,8 +22,26 @@
     background-color: var(--playlist-hover-bgcolor) !important;
 }
 
+@mixin ant-td-style($color) {
 
+    th,
+    td,
+    tr {
+        color: var(--font-color) !important;
+        background-color: $color !important;
+        border-bottom: none !important;
+    }
+}
 
+.ant-table {
+    @include ant-td-style(var(--body-bgcolor))
+}
+
+@mixin ant-table-theme($color) {
+    /deep/.ant-table {
+        @include ant-td-style($color);
+    }
+}
 
 //input
 $input-height: 24px;

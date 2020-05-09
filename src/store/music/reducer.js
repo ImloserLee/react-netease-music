@@ -8,7 +8,9 @@ const defaultState = {
     // 播放列表显示
     isPlaylistShow: false,
     // 播放列表数据
-    playList: []
+    playList: [],
+    // 播放器显示隐藏
+    isPlayerShow: false
 };
 export const musicReducer = (state = defaultState, action = {}) => {
     switch (action.type) {
@@ -20,6 +22,10 @@ export const musicReducer = (state = defaultState, action = {}) => {
             return { ...state, ...{ isPlayListShow: action.flag } };
         case music.SET_PLAY_LIST:
             return { ...state, ...{ playList: action.songs } };
+        case music.CLEAR_PLAY_LIST:
+            return { ...state, ...{ playList: action.playList } };
+        case music.SET_PLAYER_SHOW:
+            return { ...state, ...{ isPlayerShow: action.flag } };
         default:
             return state;
     }

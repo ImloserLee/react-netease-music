@@ -10,7 +10,7 @@ import './index.scss';
 function Miniplayer(props) {
     const [visible, setVisible] = useState(false);
 
-    const { playMode, isPlayListShow } = props;
+    const { playMode, isPlayListShow, isPlayerShow } = props;
 
     // 当前播放模式
     const currentMode = useMemo(() => {
@@ -45,12 +45,16 @@ function Miniplayer(props) {
         props.musicAction.setPlayListShow(!isPlayListShow);
     };
 
+    const togglePlayerShow = () => {
+        props.musicAction.setPlayerShow(!isPlayerShow);
+    };
+
     const content = <p className='miniplayer-pop-content'>{playModeText}</p>;
 
     return (
         <div className='mini-player-wrapper'>
             <div className='song'>
-                <div className='img-wrap'>
+                <div className='img-wrap' onClick={togglePlayerShow}>
                     <img src='' alt='' className='blur' />
                     <div className='player-control'>
                         <Icon size={24} type='shrink' color='white' />
@@ -100,7 +104,8 @@ function Miniplayer(props) {
 const mapStateToProps = state => {
     return {
         playMode: state.musicReducer.playMode,
-        isPlayListShow: state.musicReducer.isPlayListShow
+        isPlayListShow: state.musicReducer.isPlayListShow,
+        isPlayerShow: state.musicReducer.isPlayerShow
     };
 };
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as musicAction from 'store/music/action';
 import Tabs from 'components/Tabs';
 import Icon from 'components/Icon';
 import SongTable from 'components/SongTable';
@@ -9,20 +11,22 @@ const TABS = ['播放列表', '历史记录'];
 
 function PlayList(props) {
     const { isPlayListShow, playList } = props;
-    console.log(
-        '%c 🍊 playList: ',
-        'font-size:20px;background-color: #ED9EC7;color:#fff;',
-        playList
-    );
+
+    const handleClear = () => {
+        props.musicAction.clearPlayList();
+    };
+
     return isPlayListShow ? (
         <div className='playlist-wrap'>
             <Tabs tabs={TABS} align='center' />
             <div className='play-header'>
                 <p className='total'>{`总共首${playList.length}`}</p>
-                <div className='remove'>
-                    <Icon type='remove' />
-                    <span className='text'>清空</span>
-                </div>
+                {playList.length ? (
+                    <div className='remove' onClick={handleClear}>
+                        <Icon type='remove' />
+                        <span className='text'>清空</span>
+                    </div>
+                ) : null}
             </div>
             {playList.length ? (
                 <div className='playlist-table'>
@@ -46,7 +50,13 @@ const mapStateToProps = state => {
     };
 };
 
+const mapDispatchToProps = dispatch => {
+    return {
+        musicAction: bindActionCreators(musicAction, dispatch)
+    };
+};
+
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(React.memo(PlayList));

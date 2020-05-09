@@ -55,6 +55,7 @@ function SongTable(props) {
             dataIndex: 'name',
             key: 'name',
             title: '音乐标题',
+            ellipsis: true,
             render: (text, record) => {
                 const { name, mvId } = record;
 
