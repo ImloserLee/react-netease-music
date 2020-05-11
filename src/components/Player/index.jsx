@@ -7,7 +7,7 @@ function Player(props) {
     const { isPlayerShow } = props;
 
     return (
-        <CSSTransition in={isPlayerShow} timeout={300} classNames='alert' unmountOnExit>
+        <CSSTransition in={isPlayerShow} timeout={300} classNames='slide' unmountOnExit>
             <div className='player-wrap'>播放器</div>
         </CSSTransition>
     );
@@ -19,7 +19,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(
-    mapStateToProps,
-    null
-)(React.memo(Player));
+export default connect(mapStateToProps, null)(React.memo(Player));

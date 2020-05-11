@@ -1,10 +1,10 @@
 import React, { memo, useCallback, useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import * as musicAction from 'store/music/action';
 import { Popover } from 'antd';
 import Icon from 'components/Icon';
 import Volume from 'components/Volume';
-import * as musicAction from 'store/music/action';
 import { playModeMap } from 'utils';
 import './index.scss';
 function Miniplayer(props) {
@@ -115,7 +115,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(memo(Miniplayer));
+export default connect(mapStateToProps, mapDispatchToProps)(memo(Miniplayer));

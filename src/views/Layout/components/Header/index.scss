@@ -55,6 +55,12 @@
             }
         }
 
+        &__shrink {
+            position: relative;
+            top: -6px;
+            margin-left: 16px;
+        }
+
         &__history {
             margin-left: 20px;
         }

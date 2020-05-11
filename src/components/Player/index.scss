@@ -9,21 +9,19 @@
     transition: transform .5s
 }
 
-.alert-enter {
+.slide-enter,
+.slide-exit-done {
     opacity: 0;
 }
 
-.alert-enter-active {
-    opacity: 1;
-    transform: translateY(100%);
-}
 
-.alert-exit {
-    transition: all 0.5s;
+.slide-enter-done,
+.slide-exit {
     opacity: 1;
 }
 
-.alert-exit-active {
-    opacity: 0;
+.slide-exit-active,
+.slide-enter-active {
     transform: translateY(100%);
+    transition: all .5s;
 }
