@@ -1,8 +1,16 @@
 import * as music from './action-type';
 
-export const startSong = song => {
+export const startSong = rawSong => {
+    const song = Object.assign({}, rawSong);
+
+    return dispatch => {
+        dispatch(setCurrentSong(song));
+    };
+};
+
+export const setCurrentSong = song => {
     return {
-        type: music.START_SONG,
+        type: music.SET_CURRENT_SONG,
         song
     };
 };

@@ -1,8 +1,11 @@
 import * as music from './action-type';
 import { playModeMap } from 'utils';
+
 const defaultState = {
     // 当前播放歌曲
     currentSong: {},
+    // 当前播放歌曲缩影
+    currentIndex: -1,
     // 播放模式
     playMode: playModeMap.sequence.code,
     // 播放列表显示
@@ -12,9 +15,10 @@ const defaultState = {
     // 播放器显示隐藏
     isPlayerShow: false
 };
+
 export const musicReducer = (state = defaultState, action = {}) => {
     switch (action.type) {
-        case music.START_SONG:
+        case music.SET_CURRENT_SONG:
             return { ...state, ...{ currentSong: action.song } };
         case music.SET_PLAY_MODE:
             return { ...state, ...{ playMode: action.code } };

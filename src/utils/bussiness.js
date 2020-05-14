@@ -3,7 +3,7 @@
  */
 
 export function createSong(song) {
-    const { id, name, img, artists, duration, mvId, ...rest } = song;
+    const { id, name, img, artists, duration, albumId, albumName, mvId, ...rest } = song;
 
     return {
         id,
@@ -12,10 +12,18 @@ export function createSong(song) {
         artists,
         duration,
         mvId,
+        // 专辑 如果需要额外请求封面的话必须加上
+        albumId,
+        albumName,
         durationSecond: duration / 1000,
         artistsText: genArtistisText(artists),
+        url: genSongPlayUrl(song.id),
         ...rest
     };
+}
+
+function genSongPlayUrl(id) {
+    return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
 }
 
 /**
@@ -104,3 +112,5 @@ export function genUsermenu(userPlaylist, userId) {
 
     return retMenu;
 }
+
+export function getSongImg(id, albumId) {}

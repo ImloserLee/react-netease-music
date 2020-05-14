@@ -9,3 +9,5 @@ export const SET_PLAYER_SHOW = 'SET_PLAYER_SHOW';
 export const SET_PLAY_LIST = 'SET_PLAY_LIST';
 
 export const CLEAR_PLAY_LIST = 'CLEAR_PLAY_LIST';
+
+export const SET_CURRENT_SONG = 'SET_CURRENT_SONG';

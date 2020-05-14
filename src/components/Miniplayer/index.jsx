@@ -1,16 +1,24 @@
-import React, { memo, useCallback, useState, useMemo } from 'react';
+import React, { memo, useCallback, useState, useMemo, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as musicAction from 'store/music/action';
 import { Popover } from 'antd';
 import Icon from 'components/Icon';
 import Volume from 'components/Volume';
-import { playModeMap } from 'utils';
+import { playModeMap, formatTime } from 'utils';
 import './index.scss';
 function Miniplayer(props) {
     const [visible, setVisible] = useState(false);
+    const [songReady, setSongReady] = useState(false);
+    // const [nextSong, setNextSong] = useState({})
+    const audio = useRef();
 
-    const { playMode, isPlayListShow, isPlayerShow } = props;
+    const { playMode, isPlayListShow, isPlayerShow, currentSong } = props;
+    console.log(
+        '%c 🍷 currentSong: ',
+        'font-size:20px;background-color: #42b983;color:#fff;',
+        currentSong
+    );
 
     // 当前播放模式
     const currentMode = useMemo(() => {
@@ -49,27 +57,61 @@ function Miniplayer(props) {
         props.musicAction.setPlayerShow(!isPlayerShow);
     };
 
+    const next = () => {
+        console.log('请播放下一首');
+        // props.musicAction.startSong()
+    };
+
+    const ready = () => {
+        setSongReady(true);
+    };
+
+    const end = () => {
+        next();
+    };
+
+    const play = async () => {
+        if (songReady) {
+            try {
+                await audio.current.play();
+            } catch (error) {
+                console.log(
+                    '%c 🍅 error: ',
+                    'font-size:20px;background-color: #B03734;color:#fff;',
+                    error
+                );
+            }
+        }
+    };
+
+    useEffect(() => {
+        play();
+        // eslint-disable-next-line
+    }, [currentSong, songReady]);
+
     const content = <p className='miniplayer-pop-content'>{playModeText}</p>;
 
     return (
         <div className='mini-player-wrapper'>
             <div className='song'>
                 <div className='img-wrap' onClick={togglePlayerShow}>
-                    <img src='' alt='' className='blur' />
+                    <img src={currentSong.img} alt='' className='blur' />
                     <div className='player-control'>
-                        <Icon size={24} type='shrink' color='white' />
+                        <Icon size={24} type={isPlayerShow ? 'shrink' : 'open'} color='white' />
                     </div>
                 </div>
                 <div className='content'>
                     <div className='top'>
-                        <p className='name'>勇气</p>
+                        <p className='name'>{currentSong.name}</p>
                         <p className='split'>-</p>
-                        <p className='artists'>梁静茹</p>
+                        <p className='artists'>{currentSong.artistsText}</p>
                     </div>
                     <div className='time'>
                         <span className='played-time'>00:00</span>
                         <span className='split'>/</span>
-                        <span className='total-time'>03:00</span>
+                        <span className='total-time'>
+                            {formatTime(currentSong.duration / 1000)}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -97,6 +139,13 @@ function Miniplayer(props) {
                 </div>
             </div>
             <div className='progress-bar-wrap'></div>
+            <audio
+                src={currentSong.url}
+                controls
+                ref={audio}
+                onCanPlay={ready}
+                onEnded={end}
+            ></audio>
         </div>
     );
 }
@@ -105,7 +154,8 @@ const mapStateToProps = state => {
     return {
         playMode: state.musicReducer.playMode,
         isPlayListShow: state.musicReducer.isPlayListShow,
-        isPlayerShow: state.musicReducer.isPlayerShow
+        isPlayerShow: state.musicReducer.isPlayerShow,
+        currentSong: state.musicReducer.currentSong
     };
 };
 
@@ -115,4 +165,7 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(memo(Miniplayer));
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(memo(Miniplayer));

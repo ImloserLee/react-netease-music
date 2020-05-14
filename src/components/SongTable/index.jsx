@@ -81,7 +81,8 @@ function SongTable(props) {
         {
             dataIndex: 'artistsText',
             key: 'artistsText',
-            title: '歌手'
+            title: '歌手',
+            ellipsis: true
         },
         {
             dataIndex: 'albumName',
