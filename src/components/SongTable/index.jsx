@@ -13,7 +13,14 @@ import './index.scss';
 const { Column } = Table;
 
 function SongTable(props) {
-    const { showHeader, showPagination, songs, hideColumns, currentSong } = props;
+    const {
+        showHeader,
+        showPagination,
+        songs,
+        hideColumns,
+        currentSong,
+        musicAction: { setPlayList, startSong }
+    } = props;
 
     const columns = [
         {
@@ -61,7 +68,6 @@ function SongTable(props) {
 
                 const handleGoMv = e => {
                     e.stopPropagation();
-                    console.log('%c 🍔 mvId: ', 'background-color: #3F7CFF;color:#fff;', mvId);
                 };
 
                 return (
@@ -128,8 +134,8 @@ function SongTable(props) {
     }, [songs]);
 
     const handleRowClick = song => {
-        props.musicAction.startSong(song);
-        props.musicAction.setPlayList(songs);
+        startSong(song);
+        setPlayList(songs);
     };
 
     const isActiveSong = useCallback(

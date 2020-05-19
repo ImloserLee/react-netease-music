@@ -1,3 +1,4 @@
+import { playModeMap } from './config';
 /**
  * 业务工具方法
  */
@@ -114,3 +115,93 @@ export function genUsermenu(userPlaylist, userId) {
 }
 
 export function getSongImg(id, albumId) {}
+
+// 播放歌曲相关
+// 获取当前播放歌曲的索引
+export const currentIndex = (playList, currentSong) => {
+    return playList.findIndex(list => list.id === currentSong.id);
+};
+
+export const nextSong = (playList, playMode, currentSong) => {
+    const nextStratMap = {
+        [playModeMap.sequence.code]: getSequenceNextIndex,
+        [playModeMap.loop.code]: getLoopNextIndex,
+        [playModeMap.random.code]: getRandomNextIndex
+    };
+
+    const getNextStrat = nextStratMap[playMode];
+    const index = getNextStrat();
+
+    return playList[index];
+
+    // 获取顺序播放的索引
+    function getSequenceNextIndex() {
+        let nextIndex = currentIndex(playList, currentSong) + 1;
+
+        if (nextIndex > playList.length - 1) {
+            nextIndex = 0;
+        }
+
+        return nextIndex;
+    }
+
+    // 获取单曲循环播放的索引
+    function getLoopNextIndex() {
+        return currentIndex(playList, currentSong);
+    }
+
+    // 获取随机播放的索引
+    function getRandomNextIndex() {
+        const index = currentIndex(playList, currentSong);
+
+        return getRandomIndex(playList, index);
+    }
+};
+
+export const prevSong = (playList, playMode, currentSong) => {
+    const prevStratMap = {
+        [playModeMap.sequence.code]: getSequencePrevIndex,
+        [playModeMap.loop.code]: getLoopPrevIndex,
+        [playModeMap.random.code]: getRandomPrevIndex
+    };
+
+    const getPrevStrat = prevStratMap[playMode];
+    const index = getPrevStrat();
+
+    return playList[index];
+
+    // 获取顺序播放的索引
+    function getSequencePrevIndex() {
+        let prevIndex = currentIndex(playList, currentSong) - 1;
+
+        if (prevIndex < 0) {
+            prevIndex = playList.length - 1;
+        }
+
+        return prevIndex;
+    }
+
+    // 获取单曲循环播放的索引
+    function getLoopPrevIndex() {
+        return currentIndex(playList, currentSong);
+    }
+
+    // 获取随机播放的索引
+    function getRandomPrevIndex() {
+        const index = currentIndex(playList, currentSong);
+
+        return getRandomIndex(playList, index);
+    }
+};
+
+function getRandomIndex(playlist, currentIndex) {
+    // 防止无限循环
+    if (playlist.length === 1) {
+        return currentIndex;
+    }
+    let index = Math.round(Math.random() * (playlist.length - 1));
+    if (index === currentIndex) {
+        index = getRandomIndex(playlist, currentIndex);
+    }
+    return index;
+}

@@ -1,24 +1,35 @@
-import React, { memo, useCallback, useState, useMemo, useRef, useEffect } from 'react';
+import React, { memo, useCallback, useState, useMemo, useRef, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as musicAction from 'store/music/action';
 import { Popover } from 'antd';
 import Icon from 'components/Icon';
 import Volume from 'components/Volume';
-import { playModeMap, formatTime } from 'utils';
+import { playModeMap, formatTime, isDef, nextSong, prevSong } from 'utils';
 import './index.scss';
 function Miniplayer(props) {
     const [visible, setVisible] = useState(false);
     const [songReady, setSongReady] = useState(false);
-    // const [nextSong, setNextSong] = useState({})
+    const [volume, setVolume] = useState(0.75);
     const audio = useRef();
 
-    const { playMode, isPlayListShow, isPlayerShow, currentSong } = props;
-    console.log(
-        '%c 🍷 currentSong: ',
-        'font-size:20px;background-color: #42b983;color:#fff;',
-        currentSong
-    );
+    const {
+        playMode,
+        isPlayListShow,
+        isPlayerShow,
+        currentSong,
+        playList,
+        currentTime,
+        playingState,
+        musicAction: {
+            setPlayMode,
+            setPlayListShow,
+            setPlayerShow,
+            startSong,
+            setCurrentTime,
+            setPlayingState
+        }
+    } = props;
 
     // 当前播放模式
     const currentMode = useMemo(() => {
@@ -33,33 +44,53 @@ function Miniplayer(props) {
         return currentMode.icon;
     }, [currentMode]);
 
+    const hasCurrentSong = useMemo(() => {
+        return isDef(currentSong.id);
+    }, [currentSong]);
+
+    // 进度条拖动的范围是1-100，需要将volume*100在传递
+    const computedVolume = useMemo(() => {
+        return volume * 100;
+    }, [volume]);
+
     const handleMouseEvent = useCallback(() => {
         setVisible(!visible);
         // eslint-disable-next-line
     }, [visible]);
 
+    const playIcon = useMemo(() => {
+        return playingState ? 'pause' : 'play';
+    }, [playingState]);
+
     const handleChangePlayMode = useCallback(() => {
         const modeKeys = Object.keys(playModeMap);
         const currentModeIndex = modeKeys.findIndex(key => playModeMap[key].code === playMode);
-
         const nextIndex = (currentModeIndex + 1) % modeKeys.length;
         const nextModeKey = modeKeys[nextIndex];
         const nextMode = playModeMap[nextModeKey];
 
-        props.musicAction.setPlayMode(nextMode.code);
-    }, [playMode, props.musicAction]);
+        setPlayMode(nextMode.code);
+        // eslint-disable-next-line
+    }, [playMode]);
 
     const togglePlayListShow = () => {
-        props.musicAction.setPlayListShow(!isPlayListShow);
+        setPlayListShow(!isPlayListShow);
     };
 
     const togglePlayerShow = () => {
-        props.musicAction.setPlayerShow(!isPlayerShow);
+        setPlayerShow(!isPlayerShow);
+    };
+
+    const prev = () => {
+        const song = prevSong(playList, playMode, currentSong);
+
+        startSong(song);
     };
 
     const next = () => {
-        console.log('请播放下一首');
-        // props.musicAction.startSong()
+        const song = nextSong(playList, playMode, currentSong);
+
+        startSong(song);
     };
 
     const ready = () => {
@@ -74,14 +105,41 @@ function Miniplayer(props) {
         if (songReady) {
             try {
                 await audio.current.play();
+                setPlayingState(true);
             } catch (error) {
                 console.log(
                     '%c 🍅 error: ',
                     'font-size:20px;background-color: #B03734;color:#fff;',
                     error
                 );
+                setPlayingState(false);
             }
         }
+    };
+
+    const pause = () => {
+        audio.current.pause();
+    };
+
+    const togglePlaying = () => {
+        if (!hasCurrentSong) {
+            return;
+        }
+        setPlayingState(!playingState);
+    };
+
+    const updateTime = e => {
+        setCurrentTime(e.target.currentTime);
+    };
+
+    const onVolumeInput = value => {
+        setVolume(value / 100);
+        audio.current.volume = value / 100;
+    };
+
+    const onVolumeChange = value => {
+        setVolume(value / 100);
+        audio.current.volume = value / 100;
     };
 
     useEffect(() => {
@@ -89,40 +147,61 @@ function Miniplayer(props) {
         // eslint-disable-next-line
     }, [currentSong, songReady]);
 
+    useEffect(() => {
+        playingState ? play() : pause();
+        // eslint-disable-next-line
+    }, [playingState]);
+
+    useEffect(() => {
+        audio.current.volume = volume;
+    }, [volume]);
+
     const content = <p className='miniplayer-pop-content'>{playModeText}</p>;
 
     return (
         <div className='mini-player-wrapper'>
+            {/* 歌曲内容 */}
             <div className='song'>
-                <div className='img-wrap' onClick={togglePlayerShow}>
-                    <img src={currentSong.img} alt='' className='blur' />
-                    <div className='player-control'>
-                        <Icon size={24} type={isPlayerShow ? 'shrink' : 'open'} color='white' />
-                    </div>
-                </div>
-                <div className='content'>
-                    <div className='top'>
-                        <p className='name'>{currentSong.name}</p>
-                        <p className='split'>-</p>
-                        <p className='artists'>{currentSong.artistsText}</p>
-                    </div>
-                    <div className='time'>
-                        <span className='played-time'>00:00</span>
-                        <span className='split'>/</span>
-                        <span className='total-time'>
-                            {formatTime(currentSong.duration / 1000)}
-                        </span>
-                    </div>
-                </div>
+                {hasCurrentSong && (
+                    <Fragment>
+                        <div className='img-wrap' onClick={togglePlayerShow}>
+                            <img src={currentSong.img} alt='' className='blur' />
+                            <div className='player-control'>
+                                <Icon
+                                    size={24}
+                                    type={isPlayerShow ? 'shrink' : 'open'}
+                                    color='white'
+                                />
+                            </div>
+                        </div>
+                        <div className='content'>
+                            <div className='top'>
+                                <p className='name'>{currentSong.name}</p>
+                                <p className='split'>-</p>
+                                <p className='artists'>{currentSong.artistsText}</p>
+                            </div>
+                            <div className='time'>
+                                <span className='played-time'>{formatTime(currentTime)}</span>
+                                <span className='split'>/</span>
+                                <span className='total-time'>
+                                    {formatTime(currentSong.duration / 1000)}
+                                </span>
+                            </div>
+                        </div>
+                    </Fragment>
+                )}
             </div>
+            {/* 控制台 */}
             <div className='control'>
-                <Icon size={24} className='icon' type='prev' />
-                <div className='play-icon'>
-                    <Icon size={24} type='pause' />
+                <Icon size={24} className='icon' type='prev' click={prev} />
+                <div className='play-icon' onClick={togglePlaying}>
+                    <Icon size={24} type={playIcon} />
                 </div>
-                <Icon size={24} className='icon' type='next' />
+                <Icon size={24} className='icon' type='next' click={next} />
             </div>
+
             <div className='mode'>
+                {/* 模式 */}
                 <Popover placement='top' content={content} visible={visible} trigger='hover'>
                     <Icon
                         size={20}
@@ -133,18 +212,24 @@ function Miniplayer(props) {
                         click={handleChangePlayMode}
                     />
                 </Popover>
+                {/* 播放列表 */}
                 <Icon size={20} className='mode-item' type='playlist' click={togglePlayListShow} />
+                {/* 音量 */}
                 <div className='volume-item'>
-                    <Volume />
+                    <Volume
+                        volume={computedVolume}
+                        onVolumeInput={onVolumeInput}
+                        onVolumeChange={onVolumeChange}
+                    />
                 </div>
             </div>
             <div className='progress-bar-wrap'></div>
             <audio
                 src={currentSong.url}
-                controls
                 ref={audio}
                 onCanPlay={ready}
                 onEnded={end}
+                onTimeUpdate={updateTime}
             ></audio>
         </div>
     );
@@ -155,7 +240,10 @@ const mapStateToProps = state => {
         playMode: state.musicReducer.playMode,
         isPlayListShow: state.musicReducer.isPlayListShow,
         isPlayerShow: state.musicReducer.isPlayerShow,
-        currentSong: state.musicReducer.currentSong
+        currentSong: state.musicReducer.currentSong,
+        playList: state.musicReducer.playList,
+        currentTime: state.musicReducer.currentTime,
+        playingState: state.musicReducer.playingState
     };
 };
 

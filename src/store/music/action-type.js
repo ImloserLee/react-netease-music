@@ -11,3 +11,7 @@ export const SET_PLAY_LIST = 'SET_PLAY_LIST';
 export const CLEAR_PLAY_LIST = 'CLEAR_PLAY_LIST';
 
 export const SET_CURRENT_SONG = 'SET_CURRENT_SONG';
+
+export const SET_CURRENT_TIME = 'SET_CURRENT_TIME';
+
+export const SET_PLAYING_STATE = 'SET_PLAYING_STATE';
