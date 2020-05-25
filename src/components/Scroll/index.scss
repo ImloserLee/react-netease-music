@@ -1,0 +1,10 @@
+.scroll-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+
+    .bscroll-indicator {
+        border: none !important;
+        background: var(--scrollbar-color) !important;
+    }
+}

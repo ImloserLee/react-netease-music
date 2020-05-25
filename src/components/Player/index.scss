@@ -1,12 +1,177 @@
+$img-left-padding: 36px;
+$img-outer-border-d: 320px;
+$img-outer-d: 300px;
+$support-d: 30px;
+$support-d-half: $support-d / 2;
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(1turn);
+    }
+}
+
 .player-wrap {
     position: fixed;
     top: $header-height;
     bottom: $mini-player-height;
     left: 0;
     right: 0;
+    padding: 0 36px;
+    overflow: hidden;
+    overflow-y: auto;
     background: var(--player-bgcolor);
     z-index: $song-detail-z-index;
-    transition: transform .5s
+    transition: transform .5s;
+
+    .content {
+        max-width: 870px;
+        margin: auto;
+
+        .song {
+            display: flex;
+
+            .left {
+                position: relative;
+                padding: 80px 70px 0 $img-left-padding;
+                display: flex;
+                justify-content: center;
+
+                .play-bar-support {
+                    position: absolute;
+                    left: $img-left-padding + $img-outer-border-d / 2 - $support-d / 2;
+                    top: -$support-d-half;
+                    width: $support-d;
+                    height: $support-d;
+                    z-index: 2;
+                }
+
+                .play-bar {
+                    $w: 100px;
+                    $h: 146px;
+                    position: absolute;
+                    top: 0;
+                    left: $img-left-padding + $img-outer-border-d / 2 - 6px;
+                    width: $w;
+                    height: $h;
+                    z-index: 1;
+                    transform-origin: 0 0;
+                    transform: rotate(-30deg);
+                    transition: all 0.3s;
+
+                    &.playing {
+                        transform: rotate(5deg);
+                    }
+                }
+
+                .img-outer-border {
+                    @include round($img-outer-border-d);
+                    @include flex-center;
+                    background: var(--song-shallow-grey-bg);
+
+                    .img-outer {
+                        @include round($img-outer-d);
+                        @include flex-center;
+                        background: $black;
+                        background: linear-gradient(-45deg, #333540, #070708, #333540);
+                        animation: rotate 20s linear infinite;
+
+                        &.paused {
+                            animation-play-state: paused;
+                        }
+
+                        .img-wrap {
+                            @include img-wrap(200px);
+
+                            img {
+                                border-radius: 50%;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .right {
+                flex: 1;
+                padding-top: 45px;
+
+                .name-wrap {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 16px;
+
+                    .name {
+                        font-size: $font-size-title-lg;
+                        color: var(--font-color-white);
+                    }
+
+                    .mv-tag {
+                        display: inline-block;
+                        margin-left: 8px;
+                        padding: 2px;
+                        border: 1px solid currentColor;
+                        border-radius: 2px;
+                        color: $theme-color;
+                        cursor: pointer;
+                    }
+                }
+
+                .artists {
+                    margin-bottom: 16px;
+                }
+
+                .desc {
+                    display: flex;
+                    font-size: $font-size-sm;
+                    margin-bottom: 30px;
+
+                    .desc-item {
+                        display: flex;
+                        margin-right: 32px;
+
+                        .label {
+                            display: inline-block;
+                            margin-right: 4px;
+                        }
+
+                        .value {
+                            color: $blue;
+                        }
+                    }
+                }
+
+                .lyric-wrap {
+                    width: 380px;
+                    height: 350px;
+                    mask-image: linear-gradient(180deg,
+                            hsla(0, 0%, 100%, 0) 0,
+                            hsla(0, 0%, 100%, 0.6) 15%,
+                            #fff 25%,
+                            #fff 75%,
+                            hsla(0, 0%, 100%, 0.6) 85%,
+                            hsla(0, 0%, 100%, 0));
+
+                    .lyric-item {
+                        margin-bottom: 16px;
+                        font-size: $font-size-sm;
+
+                        &.active {
+                            font-size: $font-size;
+                            color: var(--font-color-white);
+                            font-weight: $font-weight-bold;
+                        }
+
+                        .lyric-text {
+                            margin-bottom: 8px;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 .slide-enter,

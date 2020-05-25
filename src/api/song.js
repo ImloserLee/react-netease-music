@@ -6,3 +6,10 @@ export const getTopSongs = async type => {
 
     return ret;
 };
+
+// 歌词
+export const getLyric = async id => {
+    const ret = await get(`/lyric?id=${id}`);
+
+    return ret;
+};

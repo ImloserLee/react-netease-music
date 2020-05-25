@@ -5,6 +5,7 @@ import * as musicAction from 'store/music/action';
 import { Popover } from 'antd';
 import Icon from 'components/Icon';
 import Volume from 'components/Volume';
+import ProgressBar from 'components/ProgressBar';
 import { playModeMap, formatTime, isDef, nextSong, prevSong } from 'utils';
 import './index.scss';
 function Miniplayer(props) {
@@ -53,6 +54,13 @@ function Miniplayer(props) {
         return volume * 100;
     }, [volume]);
 
+    // 歌曲进度的数值
+    const playedPercent = useMemo(() => {
+        const { durationSecond } = currentSong;
+
+        return Math.min(currentTime / durationSecond, 1) * 100 || 0;
+    }, [currentTime, currentSong]);
+
     const handleMouseEvent = useCallback(() => {
         setVisible(!visible);
         // eslint-disable-next-line
@@ -81,26 +89,31 @@ function Miniplayer(props) {
         setPlayerShow(!isPlayerShow);
     };
 
+    // 上一首
     const prev = () => {
         const song = prevSong(playList, playMode, currentSong);
 
         startSong(song);
     };
 
+    // 下一首
     const next = () => {
         const song = nextSong(playList, playMode, currentSong);
 
         startSong(song);
     };
 
+    // 准备播放歌曲
     const ready = () => {
         setSongReady(true);
     };
 
+    // 下一首
     const end = () => {
         next();
     };
 
+    // 播放歌曲
     const play = async () => {
         if (songReady) {
             try {
@@ -117,10 +130,12 @@ function Miniplayer(props) {
         }
     };
 
+    // 暂停
     const pause = () => {
         audio.current.pause();
     };
 
+    // 暂停/播放
     const togglePlaying = () => {
         if (!hasCurrentSong) {
             return;
@@ -128,6 +143,7 @@ function Miniplayer(props) {
         setPlayingState(!playingState);
     };
 
+    // 更新时长
     const updateTime = e => {
         setCurrentTime(e.target.currentTime);
     };
@@ -140,6 +156,22 @@ function Miniplayer(props) {
     const onVolumeChange = value => {
         setVolume(value / 100);
         audio.current.volume = value / 100;
+    };
+
+    const setTime = playedPercent => {
+        const { durationSecond } = currentSong;
+        const time = durationSecond * (playedPercent / 100);
+
+        audio.current.currentTime = time;
+        setCurrentTime(time);
+    };
+
+    const onProgressChange = value => {
+        setTime(value);
+    };
+
+    const onProgressInput = value => {
+        setTime(value);
     };
 
     useEffect(() => {
@@ -199,7 +231,6 @@ function Miniplayer(props) {
                 </div>
                 <Icon size={24} className='icon' type='next' click={next} />
             </div>
-
             <div className='mode'>
                 {/* 模式 */}
                 <Popover placement='top' content={content} visible={visible} trigger='hover'>
@@ -223,7 +254,16 @@ function Miniplayer(props) {
                     />
                 </div>
             </div>
-            <div className='progress-bar-wrap'></div>
+            {hasCurrentSong && (
+                <div className='progress-bar-wrap'>
+                    <ProgressBar
+                        progressChange={onProgressChange}
+                        progressInput={onProgressInput}
+                        percent={playedPercent}
+                        step='0.1'
+                    />
+                </div>
+            )}
             <audio
                 src={currentSong.url}
                 ref={audio}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './index.scss';
 
 function ProgressBar(props) {
-    const { percent, progressInput, progressChange } = props;
+    const { percent, progressInput, progressChange, step } = props;
 
     const progress = useRef(null);
 
@@ -31,7 +31,7 @@ function ProgressBar(props) {
             type='range'
             max='100'
             min='0'
-            step='1'
+            step={step}
             value={percent}
             onChange={onProgressChange}
             onInput={onProgressInput}
@@ -41,13 +41,15 @@ function ProgressBar(props) {
 }
 
 ProgressBar.defaultProps = {
-    percent: 0
+    percent: 0,
+    step: '1'
 };
 
 ProgressBar.propTypes = {
     percent: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     progressChange: PropTypes.func,
-    progressInput: PropTypes.func
+    progressInput: PropTypes.func,
+    step: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 export default ProgressBar;

@@ -3,6 +3,7 @@
     -webkit-appearance: none;
     height: 2px;
     background: -webkit-linear-gradient($theme-color, $theme-color) no-repeat, var(--progress-bgcolor);
+    cursor: pointer;
 
     &:focus {
         outline: none;

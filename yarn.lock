@@ -1101,6 +1101,32 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@better-scroll/core@^2.0.0-beta.8":
+  version "2.0.0-beta.8"
+  resolved "https://registry.npm.taobao.org/@better-scroll/core/download/@better-scroll/core-2.0.0-beta.8.tgz?cache=0&sync_timestamp=1589953012060&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40better-scroll%2Fcore%2Fdownload%2F%40better-scroll%2Fcore-2.0.0-beta.8.tgz#c067d64f28922d050a616f7d84f8d2c907e391cf"
+  integrity sha1-wGfWTyiSLQUKYW99hPjSyQfjkc8=
+  dependencies:
+    "@better-scroll/shared-utils" "^2.0.0-beta.8"
+
+"@better-scroll/mouse-wheel@^2.0.0-alpha.20":
+  version "2.0.0-beta.8"
+  resolved "https://registry.npm.taobao.org/@better-scroll/mouse-wheel/download/@better-scroll/mouse-wheel-2.0.0-beta.8.tgz?cache=0&sync_timestamp=1589953015716&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40better-scroll%2Fmouse-wheel%2Fdownload%2F%40better-scroll%2Fmouse-wheel-2.0.0-beta.8.tgz#2fd9dfdb6c7a581f85b9a7a52fa475afa40b7294"
+  integrity sha1-L9nf22x6WB+FuaelL6R1r6QLcpQ=
+  dependencies:
+    "@better-scroll/core" "^2.0.0-beta.8"
+
+"@better-scroll/scroll-bar@^2.0.0-alpha.20":
+  version "2.0.0-beta.8"
+  resolved "https://registry.npm.taobao.org/@better-scroll/scroll-bar/download/@better-scroll/scroll-bar-2.0.0-beta.8.tgz?cache=0&sync_timestamp=1589953352592&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40better-scroll%2Fscroll-bar%2Fdownload%2F%40better-scroll%2Fscroll-bar-2.0.0-beta.8.tgz#263831f9bfb7db81fa7a3faab55fae424639ea22"
+  integrity sha1-Jjgx+b+324H6ej+qtV+uQkY56iI=
+  dependencies:
+    "@better-scroll/core" "^2.0.0-beta.8"
+
+"@better-scroll/shared-utils@^2.0.0-beta.8":
+  version "2.0.0-beta.8"
+  resolved "https://registry.npm.taobao.org/@better-scroll/shared-utils/download/@better-scroll/shared-utils-2.0.0-beta.8.tgz#0f884af36ea251dddccaf2d7b1a550a5273bc2a2"
+  integrity sha1-D4hK826iUd3cyvLXsaVQpSc7wqI=
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.npm.taobao.org/@cnakazawa/watch/download/@cnakazawa/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
