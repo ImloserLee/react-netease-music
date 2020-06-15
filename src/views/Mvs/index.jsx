@@ -115,6 +115,7 @@ function Mvs() {
                         pageSize={PAGE_SIZE}
                         current={pageIndex}
                         onChange={handlePaginationChange}
+                        showSizeChanger={false}
                     />
                 </div>
             )}

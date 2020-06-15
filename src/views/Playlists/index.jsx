@@ -98,6 +98,7 @@ function Playlists() {
                             total={songTotal}
                             pageSize={PAGE_SIZE}
                             current={pageIndex}
+                            showSizeChanger={false}
                             onChange={handlePaginationChange}
                         />
                     </div>

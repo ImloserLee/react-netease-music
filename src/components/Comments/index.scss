@@ -1,0 +1,17 @@
+.block {
+    margin-bottom: 48px;
+
+    .title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        margin-bottom: 4px;
+
+        .count {
+            font-size: $font-size;
+        }
+    }
+}
+
+  .pagination-wrap {
+    text-align: right;
+}
