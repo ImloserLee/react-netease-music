@@ -20,3 +20,17 @@ export const getSimiSongs = async (id, option) => {
 
 	return ret;
 };
+
+// 歌单详情
+export const getListDetail = async params => {
+	const ret = await get(`/playlist/detail`, params);
+
+	return ret;
+};
+
+// 音乐详情
+export const getSongDetail = async ids => {
+	const ret = await get(`/song/detail?ids=${ids}`);
+
+	return ret;
+};

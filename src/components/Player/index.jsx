@@ -18,7 +18,14 @@ import playbar from "../../img/play-bar.png";
 import "./index.scss";
 
 function Player(props) {
-	const { isPlayerShow, currentSong, playingState, musicAction, playList } = props;
+	const {
+		isPlayerShow,
+		currentSong,
+		playingState,
+		playList,
+		history,
+		musicAction: { setPlayerShow, startSong, setPlayList }
+	} = props;
 
 	const [nolyric, setNoLyric] = useState(false);
 	const [lyric, setLyric] = useState([]);
@@ -37,19 +44,20 @@ function Player(props) {
 	});
 
 	const onClickSong = song => {
-		musicAction.startSong(song);
+		startSong(song);
 
 		const copy = playList.slice();
 
 		if (!copy.find(({ id }) => id === song.id)) {
 			copy.unshift(song);
 
-			musicAction.setPlayList(copy);
+			setPlayList(copy);
 		}
 	};
 
 	const onClickPlaylist = id => {
-		console.log("%c 🥖 id: ", "font-size:20px;background-color: #6EC1C2;color:#fff;", id);
+		setPlayerShow(false);
+		history.push(`/playlist/${id}`);
 	};
 
 	const updateLyric = async () => {

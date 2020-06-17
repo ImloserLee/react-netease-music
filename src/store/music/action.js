@@ -72,3 +72,19 @@ export const setPlayingState = state => {
 		state
 	};
 };
+
+// 设置历史记录
+export const setPlayHistory = history => {
+	return {
+		type: music.SET_PLAY_HISTORY,
+		history
+	};
+};
+
+// 清除历史记录
+export const clearPlayHistory = () => {
+	return {
+		type: music.CLEAR_PLAY_HISTORY,
+		history: []
+	};
+};
