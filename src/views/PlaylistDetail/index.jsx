@@ -69,7 +69,7 @@ function PlaylistDetail(props) {
 	if (playlist.id) {
 		return (
 			<div className='playlist-detail'>
-				<Header playlist={playlist} />
+				<Header playlist={playlist} songs={songs} />
 				<div className='tabs-wrap'>
 					<Tabs tabs={tabs} tabChange={handleTabChange} type='theme' />
 				</div>

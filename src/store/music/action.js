@@ -43,9 +43,9 @@ export const setPlayListShow = flag => {
 
 // 清除播放歌单
 export const clearPlayList = () => {
-	return {
-		type: music.CLEAR_PLAY_LIST,
-		playList: []
+	return dispatch => {
+		dispatch(setPlayList([]));
+		dispatch(clearCurrentSong());
 	};
 };
 
@@ -83,8 +83,16 @@ export const setPlayHistory = history => {
 
 // 清除历史记录
 export const clearPlayHistory = () => {
-	return {
-		type: music.CLEAR_PLAY_HISTORY,
-		history: []
+	return dispatch => {
+		dispatch(setPlayHistory([]));
+	};
+};
+
+// 清除当前歌曲
+export const clearCurrentSong = () => {
+	return dispatch => {
+		dispatch(setPlayingState(false));
+		dispatch(setCurrentTime(0));
+		dispatch(setCurrentSong({}));
 	};
 };

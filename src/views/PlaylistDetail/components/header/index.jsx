@@ -1,15 +1,28 @@
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as musicAction from "store/music/action";
 import Icon from "components/Icon";
 import { formatDate } from "utils";
 import "./index.scss";
 
 function Header(props) {
-	const { playlist } = props;
+	const {
+		playlist,
+		songs,
+		musicAction: { startSong, setPlayList }
+	} = props;
 
 	const tagsText = useCallback(tags => {
 		return tags.join("/");
 	}, []);
+
+	const handlePlaySongs = () => {
+		startSong(songs[0]);
+		setPlayList(songs);
+	};
+
 	return (
 		<div className='playlistdetail-header'>
 			<div className='img-wrap'>
@@ -25,7 +38,7 @@ function Header(props) {
 					<p className='create-time'>{formatDate(playlist.createTime, "yyyy-MM-dd")} 创建</p>
 				</div>
 				<div className='action-wrap'>
-					<div className='button'>
+					<div className='button' onClick={handlePlaySongs}>
 						<Icon color='white' type='play-round' className='middle' />
 						<span className='middle'>播放全部</span>
 					</div>
@@ -55,4 +68,10 @@ Header.propTypes = {
 	songs: PropTypes.array
 };
 
-export default React.memo(Header);
+const mapDispatchToProps = dispatch => {
+	return {
+		musicAction: bindActionCreators(musicAction, dispatch)
+	};
+};
+
+export default connect(null, mapDispatchToProps)(React.memo(Header));

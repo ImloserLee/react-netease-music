@@ -14,6 +14,7 @@ const Discovery = lazy(() => import("views/Discovery"));
 const Playlists = lazy(() => import("views/Playlists"));
 const Songs = lazy(() => import("views/Songs"));
 const Mvs = lazy(() => import("views/Mvs"));
+const Mv = lazy(() => import("views/Mv"));
 const PlaylistDetail = lazy(() => import("views/PlaylistDetail"));
 
 // 侧边栏显示的菜单
@@ -61,6 +62,10 @@ const routes = [
 			{
 				path: "/search/:keywords",
 				component: SuspenseComponent(Search)
+			},
+			{
+				path: "/mv/:id",
+				component: SuspenseComponent(Mv)
 			},
 			...menuRoutes
 		]

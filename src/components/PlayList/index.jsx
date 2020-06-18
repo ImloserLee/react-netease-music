@@ -38,15 +38,15 @@ function PlayList(props) {
 		<div className='playlist-wrap'>
 			<Tabs tabs={TABS} align='center' tabChange={handleTabChange} />
 			<div className='play-header'>
-				<p className='total'>{`总共${playList.length}首`}</p>
-				{playList.length ? (
+				<p className='total'>{`总共${dataSource.length}首`}</p>
+				{dataSource.length ? (
 					<div className='remove' onClick={handleClear}>
 						<Icon type='remove' />
 						<span className='text'>清空</span>
 					</div>
 				) : null}
 			</div>
-			{playList.length ? (
+			{dataSource.length ? (
 				<div className='playlist-table'>
 					<SongTable
 						showHeader={true}
