@@ -4,7 +4,23 @@ import * as music from "./action-type";
 export const startSong = rawSong => {
 	const song = Object.assign({}, rawSong);
 
-	return dispatch => {
+	return (dispatch, getState) => {
+		const {
+			musicReducer: { playHistory }
+		} = getState();
+
+		const playHistoryCopy = playHistory.slice();
+
+		const findedIndex = playHistoryCopy.findIndex(({ id }) => song.id === id);
+
+		if (findedIndex !== -1) {
+			// 删除旧的一项，插入到最前面
+			playHistoryCopy.splice(findedIndex, 1);
+		}
+		playHistoryCopy.unshift(song);
+
+		dispatch(setPlayHistory(playHistoryCopy));
+
 		dispatch(setCurrentSong(song));
 	};
 };
@@ -94,5 +110,13 @@ export const clearCurrentSong = () => {
 		dispatch(setPlayingState(false));
 		dispatch(setCurrentTime(0));
 		dispatch(setCurrentSong({}));
+	};
+};
+
+// 更新结果数据
+export const updateCount = count => {
+	return {
+		type: music.UPDATE_COUNT,
+		count
 	};
 };

@@ -1,0 +1,23 @@
+.search-detail {
+    .search-detail-header {
+        padding: 20px 32px;
+
+        .keyword {
+            display: inline-block;
+            margin-right: 4px;
+            font-size: $font-size-title-lg;
+            font-weight: $font-weight-bold;
+        }
+
+        .found {
+            font-size: $font-size-sm;
+            color: var(--font-color-grey-shallow);
+            letter-spacing: 2px;
+        }
+    }
+
+    .tab-wrap {
+        padding: 0 28px;
+        border-bottom: 1px solid var(--border);
+    }
+}

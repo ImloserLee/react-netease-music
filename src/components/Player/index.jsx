@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { CSSTransition } from "react-transition-group";
 import { bindActionCreators } from "redux";
 import * as musicAction from "store/music/action";
+import { withRouter } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 import classnames from "classnames";
 import Scroll from "components/Scroll";
 import Comments from "components/Comments";

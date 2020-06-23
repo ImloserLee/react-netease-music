@@ -19,8 +19,7 @@ function SongTable(props) {
 		songs,
 		hideColumns,
 		currentSong,
-		playHistory,
-		musicAction: { setPlayList, startSong, setPlayHistory }
+		musicAction: { setPlayList, startSong }
 	} = props;
 
 	const columns = [
@@ -137,21 +136,6 @@ function SongTable(props) {
 	const handleRowClick = song => {
 		startSong(song);
 		setPlayList(songs);
-		_setPlayHistory(song);
-	};
-
-	const _setPlayHistory = song => {
-		const playHistoryCopy = playHistory.slice();
-
-		const findedIndex = playHistoryCopy.findIndex(({ id }) => song.id === id);
-
-		if (findedIndex !== -1) {
-			// 删除旧的一项，插入到最前面
-			playHistoryCopy.splice(findedIndex, 1);
-		}
-		playHistoryCopy.unshift(song);
-
-		setPlayHistory(playHistoryCopy);
 	};
 
 	const isActiveSong = useCallback(
@@ -214,8 +198,7 @@ SongTable.propTypes = {
 
 const mapStateToProps = state => {
 	return {
-		currentSong: state.musicReducer.currentSong,
-		playHistory: state.musicReducer.playHistory
+		currentSong: state.musicReducer.currentSong
 	};
 };
 

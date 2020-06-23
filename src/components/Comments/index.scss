@@ -1,17 +1,25 @@
-.block {
-    margin-bottom: 48px;
+.comments-wrap {
+    .block {
+        margin-bottom: 48px;
 
-    .title {
-        font-size: $font-size-lg;
-        font-weight: $font-weight-bold;
-        margin-bottom: 4px;
+        .title {
+            font-size: $font-size-lg;
+            font-weight: $font-weight-bold;
+            margin-bottom: 4px;
 
-        .count {
-            font-size: $font-size;
+            .count {
+                font-size: $font-size;
+            }
         }
     }
-}
 
-  .pagination-wrap {
-    text-align: right;
+    .pagination-wrap {
+        text-align: right;
+    }
+
+    .empty {
+        text-align: center;
+        margin-top: 100px;
+        color: var(--font-color);
+    }
 }

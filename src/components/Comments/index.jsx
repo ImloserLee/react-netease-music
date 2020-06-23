@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import { Pagination } from "antd";
 import { scrollInto } from "utils";
@@ -63,6 +63,14 @@ function Comments(props) {
 		}, 20);
 	};
 
+	const showHotCommentShow = useMemo(() => {
+		return hotComments.length > 0 && currentPage === 1;
+	}, [hotComments, currentPage]);
+
+	const shouldCommentShow = useMemo(() => {
+		return comments.length > 0;
+	}, [comments]);
+
 	useEffect(() => {
 		getComment();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,7 +78,7 @@ function Comments(props) {
 
 	return (
 		<div className='comments-wrap'>
-			{hotComments.length ? (
+			{showHotCommentShow ? (
 				<div className='block'>
 					<p className='title'>精彩评论</p>
 					{hotComments.map(comment => {
@@ -78,7 +86,7 @@ function Comments(props) {
 					})}
 				</div>
 			) : null}
-			{comments.length ? (
+			{shouldCommentShow ? (
 				<div className='block'>
 					<p className='title' ref={commentsRef}>
 						最新评论
@@ -90,16 +98,19 @@ function Comments(props) {
 				</div>
 			) : null}
 
-			<div className='pagination-wrap'>
-				<Pagination
-					size='small'
-					total={total}
-					pageSize={PAGE_SIZE}
-					current={currentPage}
-					onChange={handlePaginationChange}
-					showSizeChanger={false}
-				/>
-			</div>
+			{total > PAGE_SIZE ? (
+				<div className='pagination-wrap'>
+					<Pagination
+						size='small'
+						total={total}
+						pageSize={PAGE_SIZE}
+						current={currentPage}
+						onChange={handlePaginationChange}
+						showSizeChanger={false}
+					/>
+				</div>
+			) : null}
+			{!shouldCommentShow && !showHotCommentShow ? <div className='empty'>还没有评论哦</div> : null}
 		</div>
 	);
 }

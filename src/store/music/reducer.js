@@ -17,7 +17,9 @@ const defaultState = {
 	// 播放器显示隐藏
 	isPlayerShow: false,
 	// 播放历史
-	playHistory: []
+	playHistory: [],
+	// 结果数据
+	count: 0
 };
 
 export const musicReducer = (state = defaultState, action = {}) => {
@@ -38,6 +40,8 @@ export const musicReducer = (state = defaultState, action = {}) => {
 			return { ...state, ...{ playingState: action.state } };
 		case music.SET_PLAY_HISTORY:
 			return { ...state, ...{ playHistory: action.history } };
+		case music.UPDATE_COUNT:
+			return { ...state, ...{ count: action.count } };
 		default:
 			return state;
 	}

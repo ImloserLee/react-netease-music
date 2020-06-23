@@ -4,6 +4,7 @@ import { formatDate } from "utils";
 import { getMvDetails, getMvUrl, getSimiMv, getArtists } from "api/mv.js";
 import Comments from "components/Comments";
 import MvCard from "components/MvCard";
+import VideoPlayer from "components/VideoPlayer";
 import "./index.scss";
 
 function Mv(props) {
@@ -17,7 +18,6 @@ function Mv(props) {
 	const [mvPlayInfo, setMvPlayInfo] = useState("");
 	const [artist, setArtist] = useState({});
 	const [simiMvs, setSimiMvs] = useState([]);
-	console.log("%c 🍿 id: ", "font-size:20px;background-color: #4b4b4b;color:#fff;", id);
 
 	const init = async () => {
 		const [{ data: mvDetail }, { data: mvPlayInfo }, { mvs: simiMvs }] = await Promise.all([
@@ -44,7 +44,9 @@ function Mv(props) {
 			<div className='mv-content'>
 				<div className='left'>
 					<p className='title'>mv详情</p>
-					<div className='player'></div>
+					<div className='player'>
+						<VideoPlayer url={mvPlayInfo.url} />
+					</div>
 					<div className='author-wrap'>
 						<div className='avatar'>
 							<img src={artist.picUrl} alt='' />
@@ -68,7 +70,7 @@ function Mv(props) {
 									<div className='simi-mvs' key={mv.id}>
 										<div className='simi-mvs-card'>
 											<div className='card-left'>
-												<MvCard picUrl={mv.cover} playCount={mv.playCount} />
+												<MvCard id={mv.id} picUrl={mv.cover} playCount={mv.playCount} />
 											</div>
 											<div className='card-right'>
 												<div className='name'>{mv.name}</div>

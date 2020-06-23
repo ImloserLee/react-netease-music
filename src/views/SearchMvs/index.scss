@@ -1,0 +1,7 @@
+.search-mvs {
+    max-width: 1000px;
+    padding: $page-padding;
+    margin: auto;
+
+    @include list(25%);
+}

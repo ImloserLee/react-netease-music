@@ -15,7 +15,7 @@ function PlaylistCard(props) {
 	return (
 		<div className='playlist-card' onClick={handleClickCard}>
 			<div className='card-img'>
-				<LazyLoad overflow={true} offset={100}>
+				<LazyLoad overflow={true} offset={200}>
 					<img src={picUrl} alt='' />
 				</LazyLoad>
 				<div className='card-desc'>
