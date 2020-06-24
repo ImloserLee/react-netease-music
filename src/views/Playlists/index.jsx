@@ -87,6 +87,7 @@ function Playlists() {
 									name={list.name}
 									picUrl={list.coverImgUrl}
 									key={list.id}
+									id={list.id}
 								/>
 							);
 						})}

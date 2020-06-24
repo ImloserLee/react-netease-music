@@ -56,7 +56,7 @@ function SearchSongs(props) {
 
 	return (
 		<div className='search-song'>
-			<SongTable showHeader={true} songs={songs} />
+			<SongTable showHeader={true} songs={songs} stripe={true} />
 			<div className='pagination-wrap'>
 				<Pagination
 					size='small'

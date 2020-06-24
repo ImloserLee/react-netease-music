@@ -1,6 +1,7 @@
 import React, { useMemo, useCallback } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import classnames from "classnames";
 import * as musicAction from "store/music/action";
 import { Table } from "antd";
 import PropTypes from "prop-types";
@@ -19,6 +20,7 @@ function SongTable(props) {
 		songs,
 		hideColumns,
 		currentSong,
+		stripe,
 		musicAction: { setPlayList, startSong }
 	} = props;
 
@@ -146,10 +148,14 @@ function SongTable(props) {
 	);
 
 	const setRowClassName = useCallback(
-		record => {
-			return currentSong.id === record.id ? "table-row-active" : "";
+		(record, index) => {
+			const cls = classnames({
+				"table-row-active": currentSong.id === record.id,
+				stripe: stripe && index % 2 === 1
+			});
+			return cls;
 		},
-		[currentSong.id]
+		[currentSong.id, stripe]
 	);
 
 	if (songs.length) {
@@ -185,7 +191,8 @@ SongTable.defaultProps = {
 	showHeader: false,
 	showPagination: false,
 	songs: [],
-	hideColumns: []
+	hideColumns: [],
+	stripe: false
 };
 
 SongTable.propTypes = {
@@ -193,7 +200,8 @@ SongTable.propTypes = {
 	showHeader: PropTypes.bool,
 	showPagination: PropTypes.bool,
 	songs: PropTypes.array,
-	hideColumns: PropTypes.array
+	hideColumns: PropTypes.array,
+	stripe: PropTypes.bool
 };
 
 const mapStateToProps = state => {
