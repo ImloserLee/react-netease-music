@@ -21,3 +21,11 @@ https://binaryify.github.io/NeteaseCloudMusicApi
 
 ### 项目截图
 
+![首页](https://raw.githubusercontent.com/ImloserLee/react-netease-music/master/screenshots/music.png)
+
+![推荐歌单](https://raw.githubusercontent.com/ImloserLee/react-netease-music/master/screenshots/playlist.png)
+
+![歌单详情](https://user-images.githubusercontent.com/23615778/62509201-d99cef00-b83c-11e9-8e4b-b122b8b94468.png)
+
+![音乐播放](https://user-images.githubusercontent.com/23615778/62509202-da358580-b83c-11e9-98e1-530e5741ff56.png)
+
