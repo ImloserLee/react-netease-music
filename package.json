@@ -7,7 +7,7 @@
         "@better-scroll/mouse-wheel": "^2.0.0-alpha.20",
         "@better-scroll/scroll-bar": "^2.0.0-alpha.20",
         "antd": "^4.0.2",
-        "axios": "^0.19.1",
+        "axios": "^0.21.1",
         "customize-cra": "^0.9.1",
         "good-storage": "^1.1.0",
         "http-proxy-middleware": "^0.20.0",
