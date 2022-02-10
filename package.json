@@ -53,7 +53,7 @@
         "NeteaseCloudMusicApi": "3.25.3",
         "babel-plugin-import": "^1.13.0",
         "concurrently": "^5.1.0",
-        "node-sass": "^4.13.0",
+        "node-sass": "^7.0.0",
         "postcss-pxtorem": "^4.0.1",
         "sass-resources-loader": "^2.0.1"
     }
